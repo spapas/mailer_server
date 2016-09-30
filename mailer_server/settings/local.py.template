@@ -1,0 +1,15 @@
+# Override settings - this is not to be included in the version control
+
+SECRET_KEY = 'overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjmailer_serverdlkdfgdfg'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mailer_server',
+        'USER': 'mailer_server',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
+        'ATOMIC_REQUESTS': True,
+    }
+}

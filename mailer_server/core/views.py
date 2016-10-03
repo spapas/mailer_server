@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 from django.views.generic import FormView
 
 from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -40,8 +41,11 @@ def send_test_email(request):
     
     
 class SendMailAPIView(APIView):
+    #authentication_classes = (TokenAuthentication, )
+
+    
     def get(self, request, format=None):
-        
+        serializer = MailSerializer(data=request.data)
         return Response(serializer.data)
 
     def post(self, request, format=None):

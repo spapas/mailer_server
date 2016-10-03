@@ -57,15 +57,8 @@ def send_test_email(user):
 
 
 
-def send_email_check(diakinhsh, user):
-    User = get_user_model()
-    email_to = list(set([u.email for u in User.objects.filter(user_permissions__codename__in=['general_access', 'admin_access'])]))
-    body = u"""
-Ολοκληρώθηκε η διαδικασία υπογραφής για τη διακίνηση {0} .
-
-Παρακαλούμε συνδεθείτε στην εφαρμογή διαχείρισης γενικού υλικού (https://dgul.hcg.gr) ώστε να δείτε περισσότερες πληροφορίες.
-    """.format(diakinhsh)
-
+def send_email(diakinhsh, user):
+    
     if can_do_async():
         task = Task.objects.create(
             name='send_email_check',

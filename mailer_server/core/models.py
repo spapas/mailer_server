@@ -9,3 +9,5 @@ class GlobalPermissionHolder(models.Model):
             ('user', 'Application user'),
             ('admin', 'Application admin'),
         )
+        
+        

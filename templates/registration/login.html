@@ -1,20 +1,20 @@
 ﻿{% extends "site_base.html" %}
 {% load widget_tweaks %}
 
-{% block head_title %}Σύνδεση{% endblock %}
-{% block page_title %}Σύνδεση{% endblock %}
+{% block head_title %}Log in{% endblock %}
+{% block page_title %}Log in{% endblock %}
 {% block page_content %}
 
     {% if form.errors %}
         <div class='alert alert-danger' >
-            Σφάλμα σύνδεσης παρακαλώ δοκιμάστε ξανά
+            Cannot log in, please try again!
             {{ form.non_field_errors  }}
         </div>
     {% endif %}
     <form class='login' method="post" action="">
         {% csrf_token %}
         <div class='form-group'>
-            <label class='control-label'>Ον. χρήστη</label>
+            <label class='control-label'>Username</label>
             {{ form.username|add_class:"form-control" }} 
         </div>
         
@@ -23,8 +23,8 @@
             {{ form.password|add_class:"form-control" }}
         </div>
 
-        <input type="submit" class='btn btn-primary' value="Σύνδεση" />
-        <a href='{% url "home" %}' class='btn btn-default'>Επιστροφή</a>
+        <input type="submit" class='btn btn-primary' value="Log in" />
+        <a href='{% url "home" %}' class='btn btn-default'>Return</a>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
 

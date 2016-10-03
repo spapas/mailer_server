@@ -11,6 +11,7 @@ django-redis
 django-reversion==2.0.6
 django-tables2==1.2.6
 django-widget-tweaks==1.4.1
+djangorestframework==3.4.7
 python-ldap==2.4.25
 redis==2.10.5
 six==1.10.0

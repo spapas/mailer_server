@@ -17,6 +17,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'mailer_server.core',
+    'mailer_server.tasks',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -34,7 +35,10 @@ INSTALLED_APPS = [
     'django_rq',
     'django_tables2',
     'reversion',
+    'rest_framework',
+    'rest_framework.authtoken',
     'widget_tweaks',
+    
 ]
 
 MIDDLEWARE = [
@@ -94,7 +98,7 @@ AUTH_PASSWORD_VALIDATORS = [
     }
 ]
 
-LANGUAGE_CODE = 'el'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'Europe/Athens'
 USE_I18N = True
 USE_L10N = True
@@ -124,7 +128,7 @@ CACHES = {
 }
 
 RQ_QUEUES = {
-    'defalt': {
+    'default': {
         'USE_REDIS_CACHE': 'default',
     },
 }

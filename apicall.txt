@@ -1,0 +1,9 @@
+{
+    "subject": "s",
+    "body": "b",
+    "mail_from": "from",
+    "mail_to": "to",
+    "cc": "cc",
+    "bcc": "bcc",
+    "body_type": "plain"
+}

@@ -1,0 +1,22 @@
+{% extends "site_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Create token{% endblock %}
+{% block page_title %}Create token{% endblock %}
+{% block page_content %}
+
+<div class='alert alert-warning'>
+    
+    Do you really want to create a new access token? Please take notice that if your user *alredy* has an access token it will be cleared out and a new
+    one will be created. This means that all applications that may be using the old access token will lose their access until you upgrade the access token.
+    
+</div>
+
+<form method='POST'>
+    {% csrf_token %}
+    {{ form|crispy }}
+    <input type='submit' class='btn btn-primary' value='Ok' />
+    <a href='{% url "home" %}' class='btn btn-info' value='Ok' >Return</a>
+</form>
+
+{% endblock %}

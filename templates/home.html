@@ -31,7 +31,7 @@
 
 </style>
 {% endblock %}
-{% block head_title %}Καλώς ήρθατε{% endblock %}
+{% block head_title %}Mail server{% endblock %}
 {% block body_class %}home{% endblock %}
 
 
@@ -40,8 +40,11 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="tagline">main title</h1>
-                <h3>subtitle</h3>
+                <h1 class="tagline">Mailer Server</h1>
+                <h3>Helps you with all* your mailing needs!</h3>
+                <br />
+                <br />
+                <h4>*you only need to provide a working smpt server</h4>
             </div>
         </div>
     </div>
@@ -52,29 +55,31 @@
 
     <div class="row">
         <div class="col-sm-8">
-            <h2>Πληροφορίες</h2>
+            <h2>Information</h2>
             <br />
             <h3>
         </div>
         <div class="col-sm-4">
-            <h2>Επιλογές</h2>
+            <h2>Choices</h2>
             {% if user.is_authenticated %}
-                <h4>Καλώς ήρθατε, {{ user }}</h4>
+                <h4>Welcome, {{ user }}</h4>
                 {% if  perms.core.admin %}
-                    Πρόσβαση διαχειριστή
+                    Admin access
                 {% elif perms.core.user %}
-                    Πρόσβαση χρήστη
+                    User access
                 {% else %}
-                    Καμία πρόσβαση
+                    No access
                 {% endif %}
-
+                <hr />
+                {% if perms.core.admin or perms.core.user %}
+                    <a class='btn btn-primary' href='{% url "create_token" %}'>Create access token</a>
+                {% endif %}
+                
             {% else %}
-                <a class='btn btn-primary' href='{% url "auth_login" %}'>Σύνδεση</a>
+                <a class='btn btn-primary' href='{% url "auth_login" %}'>Log in</a>
             {% endif %}
 
 
-            <h4>Επικοινωνία</h4>
-            
         </div>
     </div>
 

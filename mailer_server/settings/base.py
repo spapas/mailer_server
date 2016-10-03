@@ -27,10 +27,12 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'compressor',
+    'constance',
     'crispy_forms',
-    'django_tables2',
-    'django_filters',
     'django_extensions',
+    'django_filters',
+    'django_rq',
+    'django_tables2',
     'reversion',
     'widget_tweaks',
 ]
@@ -112,12 +114,21 @@ LOGIN_URL = '/login/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-        'KEY_PREFIX': 'mailer_server',
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "unix://path/to/socket.sock?db=0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
+
+RQ_QUEUES = {
+    'defalt': {
+        'USE_REDIS_CACHE': 'default',
+    },
+}
+
 CACHE_MIDDLEWARE_KEY_PREFIX = 'mailer_server'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
 
@@ -149,8 +160,17 @@ DEFAULT_FROM_EMAIL = 'noreply@hcg.gr'
 # crispy forms template pack
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+CONSTANCE_CONFIG = {
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
+                       'The Universe, and Everything'),
+}
+
+CONSTANCE_REDIS_CONNECTION_CLASS = 'django_redis.get_redis_connection'
+CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
+
 from .ldap_conf import *
 AUTHENTICATION_BACKENDS = (
     'django_auth_ldap.backend.LDAPBackend',
     'mailer_server.core.auth.NoLoginModelBackend',
 )
+

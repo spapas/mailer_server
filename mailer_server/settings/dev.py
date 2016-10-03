@@ -1,14 +1,9 @@
+import logging
 from .base import *
 
 DEBUG = True
 SITE_ID = 1
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'unique-snowflake'
-    }
-}
 
 INSTALLED_APPS += (
     'debug_toolbar',
@@ -29,7 +24,21 @@ AUTHENTICATION_BACKENDS += (
 CSRF_COOKIE_SECURE = False # Override CSRF to work also with http
 SESSION_COOKIE_SECURE = False # Override session to work also with http
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
 try:
     from .local import *
-except ImportError:
-    pass
+except ImportError as e:
+    print e
+    
+logger = logging.getLogger('django_auth_ldap')
+logger.addHandler(logging.StreamHandler())
+logger.setLevel(logging.DEBUG) 

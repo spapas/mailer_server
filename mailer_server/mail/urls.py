@@ -6,10 +6,14 @@ from django.contrib.auth.views import login, logout
 from django.views.generic import TemplateView
 
 from mailer_server.mail.views import send_test_email, SendMailAPIView
+from mailer_server.mail.scaffolding import DistributionListCrudManager
 
 urlpatterns = [
-    
     url(r'send_test_email$', send_test_email, name='send_test_email'),
-    url(r'^api/send_mail/$', SendMailAPIView.as_view(), name='api_send_mail', ),
-    
+    url(r'^api/send_mail/$', SendMailAPIView.as_view(), name='api_send_mail', ),   
 ]
+
+
+dl_crud = DistributionListCrudManager()
+
+urlpatterns += dl_crud.get_url_patterns()

@@ -36,8 +36,6 @@ def can_do_async():
     return len(workers)>0
 
 
-
-subject = u'Εκκρεμότητα απογραφής γενικού υλικού'
 email_from = 'noreply@hcg.gr'
 
 def send_test_mail(user):

@@ -1,0 +1,56 @@
+﻿{% extends "site_base.html" %}
+{% load static crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block extra_style %}
+    
+{% endblock %}
+
+{% block head_title %}Update distribution list{% endblock %}
+{% block page_title %}Update distribution list{% endblock %}
+{% block page_content %}
+
+<form method="POST" action='' >
+    {% csrf_token %}
+    {{ form|crispy }}
+    {% for formset in inlines %}
+        <table border="0" cellpadding="0" cellspacing="0">
+            <thead>
+            <tr>
+                <td>Name</td>
+                <td>Email</td>
+            </tr>
+            </thead>
+            <tbody>
+                {% for form in formset.forms %}
+                <tr>
+                   <td>
+                   {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                    {{ form.name|add_class:"form-control" }}
+                    </td>
+                   <td>{{ form.email|add_class:"form-control" }}</td>
+                   
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {{ formset.management_form }}
+    {% endfor %}
+
+    <input type="submit" class="btn btn-primary" value='Save' />
+    <a href='{% url "dl_mail_distributionlist_list" %}' class="btn btn-info">Return</a>
+    
+</form>
+
+
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{% static 'jquery.formset.min.js' %}"></script>
+    <script>
+    $(function() {
+        $('tr').formset({
+            prefix: '{{ formset.prefix }}'
+        });
+    })
+    </script>
+{% endblock %}

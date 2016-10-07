@@ -1,0 +1,51 @@
+﻿{% extends "site_base.html" %}
+{% load widget_tweaks crispy_forms_tags %}
+{% load render_table from django_tables2 %}
+
+{% block extra_style %}
+<style>
+    .not-active {
+        text-decoration: line-through;
+    }
+</style>
+{% endblock %}
+
+{% block head_title %}Distribution lists{% endblock %}
+{% block page_title %}
+    Distribution lists
+    <a href='{% url "dl_mail_distributionlist_create" %}' class='btn btn-lg'>
+        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+    </a>    
+{% endblock %}
+{% block page_content %}
+
+<div class='row'>
+    {% for o in object_list %}
+        <div class='col-md-6'>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <span class='{% if not o.active %}not-active{% endif %}'><b>{{ o.id }}</b>: {{ o.name }}</span>
+                        <a class='btn btn-info btn-sm' href='{% url "dl_mail_distributionlist_update" o.id %}'>Edit</a>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        {% for a in o.authorities.all %}
+                            <li class="list-group-item">{{ a }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <div class='col-md-12'>No distribution lists!</div>
+    {% endfor %}
+</div>
+<div class='row'>
+    <div class='col-md-12'>
+        <a href='{% url "home" %}' class='btn btn-info' >Return</a>  
+    </div>
+</div>
+
+{% endblock %}

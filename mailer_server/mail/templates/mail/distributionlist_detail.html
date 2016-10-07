@@ -1,0 +1,24 @@
+﻿{% extends "site_base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}Distribution list details{% endblock %}
+{% block page_title %}Distribution list details{% endblock %}
+{% block page_content %}
+
+<div class='row'>
+    <div class='col-md-12'>
+        {{ object.name }}
+    </div>
+</div>
+
+{{ object.emailaddress_set.all }}
+
+
+<div class='row'>
+    <div class='col-md-12'>
+        <a href='{% url "dl_mail_distributionlist_list" %}' class="btn btn-info">Return</a>
+        <a class='btn btn-primary' href='{% url "dl_mail_distributionlist_update" object.id %}'>Edit</a>
+    </div>
+</div>
+
+{% endblock %}

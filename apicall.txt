@@ -1,9 +1,12 @@
 {
-    "subject": "s",
-    "body": "b",
-    "mail_from": "from",
-    "mail_to": "to",
-    "cc": "cc",
-    "bcc": "bcc",
-    "body_type": "plain"
+    "subject": "Email subject",
+    "body": "body body foo bar
+    baz taz
+    
+    raz
+    
+    ",
+    "mail_from": "from@from.gr",
+    "mail_to": "to@from.gr"
+    
 }

@@ -21,6 +21,10 @@ AUTHENTICATION_BACKENDS += (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+MIDDLEWARE += (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+)
+
 CSRF_COOKIE_SECURE = False # Override CSRF to work also with http
 SESSION_COOKIE_SECURE = False # Override session to work also with http
 

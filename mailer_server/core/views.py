@@ -1,21 +1,14 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from django.views.generic import FormView
 
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 
 from mailer_server.core.forms import EmptyForm
 
-import mailer_server.core.jobs
-from mailer_server.core.serializers import MailSerializer
 
 class CreateTokenFormView(FormView):
     form_class = EmptyForm
@@ -31,27 +24,3 @@ class CreateTokenFormView(FormView):
         messages.info(self.request, msg)
 
         return HttpResponseRedirect(reverse('home'))
-
-@permission_required('core.admin')
-def send_test_email(request):
-    msg = mark_safe('Sending test email ...')
-    messages.info(request, msg)
-    mailer_server.core.jobs.send_test_email(request.user)
-    return HttpResponseRedirect(reverse('home'))
-    
-    
-class SendMailAPIView(APIView):
-    #authentication_classes = (TokenAuthentication, )
-
-    
-    def get(self, request, format=None):
-        serializer = MailSerializer(data=request.data)
-        return Response(serializer.data)
-
-    def post(self, request, format=None):
-        serializer = MailSerializer(data=request.data)
-        
-        if serializer.is_valid():
-            print serializer
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

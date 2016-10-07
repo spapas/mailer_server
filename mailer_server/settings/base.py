@@ -18,6 +18,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'mailer_server.core',
     'mailer_server.tasks',
+    'mailer_server.mail',
 
     'django.contrib.admin',
     'django.contrib.auth',

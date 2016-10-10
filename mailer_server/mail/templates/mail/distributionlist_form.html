@@ -2,7 +2,7 @@
 {% load static crispy_forms_tags %}
 {% load widget_tweaks %}
 {% block extra_style %}
-    
+
 {% endblock %}
 
 {% block head_title %}Update distribution list{% endblock %}
@@ -13,32 +13,41 @@
     {% csrf_token %}
     {{ form|crispy }}
     {% for formset in inlines %}
-        <table border="0" cellpadding="0" cellspacing="0">
+        <table border="0" cellpadding="0" cellspacing="0" class='table table-condensed' >
             <thead>
             <tr>
                 <td>Name</td>
                 <td>Email</td>
+                <td>Remove</td>
             </tr>
             </thead>
+            
             <tbody>
-                {% for form in formset.forms %}
+                {% for form in formset %}
                 <tr>
-                   <td>
-                   {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                    {{ form.name|add_class:"form-control" }}
+                    
+                    
+                    <td>
+                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                        {{ form.name|add_class:"form-control" }}
                     </td>
-                   <td>{{ form.email|add_class:"form-control" }}</td>
-                   
+                   <td>
+                        {{ form.email|add_class:"form-control" }}
+                    </td>
+                    <td>
+                        {{ form.id }}
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
+            
         </table>
         {{ formset.management_form }}
     {% endfor %}
 
     <input type="submit" class="btn btn-primary" value='Save' />
     <a href='{% url "dl_mail_distributionlist_list" %}' class="btn btn-info">Return</a>
-    
+
 </form>
 
 
@@ -47,10 +56,19 @@
 {% block extra_script %}
     <script src="{% static 'jquery.formset.min.js' %}"></script>
     <script>
+    
+    var addedRow = function(row) {
+        console.log(row);
+    }
+    
     $(function() {
         $('tr').formset({
-            prefix: '{{ formset.prefix }}'
+            prefix: '{{ inlines.0.prefix }}',
+            addCssClass: 'btn btn-info'
+            
+            
         });
     })
+    
     </script>
 {% endblock %}

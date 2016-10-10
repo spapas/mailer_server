@@ -1,0 +1,37 @@
+﻿{% extends "site_base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}Mail template details{% endblock %}
+{% block page_title %}Mail template list details{% endblock %}
+{% block page_content %}
+
+<div class='row'>
+    <div class='col-md-12'>
+        <h3>{{ object.name }}</h3>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-md-6'>Subject: {{ object.subject }}</div>
+    <div class='col-md-6'>Body type: {{ object.body_type }}</div>
+</div>
+<div class='row'>
+    <div class='col-md-12'>
+        <h3>Body</h3>
+        {% if object.body_type == 'html' %}
+            {{ object.body|safe }}
+        {% else %}
+            {{ object.body|linebreaks }}
+        {% endif %}
+    </div>
+</div>
+
+
+<div class='row'>
+    <div class='col-md-12'>
+        <a href='{% url "mt_mail_mailtemplate_list" %}' class="btn btn-info">Return</a>
+        <a class='btn btn-primary' href='{% url "mt_mail_mailtemplate_update" object.id %}'>Edit</a>
+    </div>
+</div>
+
+{% endblock %}

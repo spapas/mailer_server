@@ -44,3 +44,18 @@ class DistributionList(NamedModel):
 
     def get_absolute_url(self):
         return reverse('dl_mail_distributionlist_detail', args=[self.id] )
+
+
+class MailTemplate(NamedModel):
+    # A model to save emails to be send
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+
+    subject = models.TextField()
+    body = models.TextField()
+
+    body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
+
+    def get_absolute_url(self):
+        return reverse('mt_mail_mailtemplate_detail', args=[self.id] )

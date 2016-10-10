@@ -10,10 +10,10 @@
 </style>
 {% endblock %}
 
-{% block head_title %}Distribution lists{% endblock %}
+{% block head_title %}Mail templates{% endblock %}
 {% block page_title %}
-    Distribution lists
-    <a href='{% url "dl_mail_distributionlist_create" %}' class='btn btn-lg'>
+    Mail templates
+    <a href='{% url "mt_mail_mailtemplate_create" %}' class='btn btn-lg'>
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </a>    
 {% endblock %}
@@ -31,16 +31,16 @@
                 </div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        {{ o.emailaddress_set.all|length }} email addresses
-                        <a class='btn btn-info btn-sm' href='{% url "dl_mail_distributionlist_detail" o.id %}'>Detail</a>
-                        <a class='btn btn-info btn-sm' href='{% url "dl_mail_distributionlist_update" o.id %}'>Edit</a>
+                        Subject: {{ o.subject }}
+                        <a class='btn btn-info btn-sm' href='{% url "mt_mail_mailtemplate_detail" o.id %}'>Detail</a>
+                        <a class='btn btn-info btn-sm' href='{% url "mt_mail_mailtemplate_update" o.id %}'>Edit</a>
                         
                     </ul>
                 </div>
             </div>
         </div>
     {% empty %}
-        <div class='col-md-12'>No distribution lists!</div>
+        <div class='col-md-12'>No mail templates!</div>
     {% endfor %}
 </div>
 <div class='row'>

@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'mailer_server.core',
     'mailer_server.tasks',
     'mailer_server.mail',
+    
+    'dal',
+    'dal_select2',
 
     'django.contrib.admin',
     'django.contrib.auth',

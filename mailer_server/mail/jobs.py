@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail as django_send_mail
+from django.core.mail import send_mass_mail as django_send_mass_mail
 from django.db import connections
 from django_rq import job
 from django.utils import timezone
@@ -13,10 +14,11 @@ from rq.connections import NoRedisConnectionException
 import django_rq
 
 from mailer_server.tasks.models import Task
+from mailer_server.mail.models import Mail
 
 
 @job
-def send_email(subject, body, email_from, email_to, task):
+def send_email_async(subject, body, email_from, email_to, task):
     "A job to send email"
 
     job = get_current_job()
@@ -46,9 +48,9 @@ def send_test_mail(user):
         task = Task.objects.create(
             name='send_test_mail',
             started_by=user,
-            result='NOT STARTED', 
+            result='NOT STARTED',
         )
-        send_email.delay(subject, body, email_from, email_to, task)
+        send_email_async.delay(subject, body, email_from, email_to, task)
 
     else:
         django_send_mail(subject, body, email_from, email_to)
@@ -62,6 +64,42 @@ def send_mail(mail):
             name='send_mail',
             started_by=mail.created_by
         )
-        send_email.delay(mail.subject, mail.body, mail.mail_from, mail_to, task)
+        send_email_async.delay(mail.subject, mail.body, mail.mail_from, mail_to, task)
     else:
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)
+
+
+@job
+def send_mass_mail_async(form, user):
+    task = Task.objects.create(
+        name='send_mass_mail',
+        started_by=user
+    )
+
+    mail_from = form.cleaned_data['from_address']
+    distribution_list = form.cleaned_data['distribution_list']
+    mail_template = form.cleaned_data['mail_template']
+
+    email_list = []
+    email_tuple_list = []
+    for address in distribution_list.emailaddress_set.all():
+        mail = mail_template.get_mail_object()
+        mail.created_by = user
+        mail.mail_from = mail_from
+        mail.mail_to = address.email
+        email_list.append(mail)
+        email_tuple_list.append(mail.get_tuple())
+
+    Mail.objects.bulk_create(email_list)
+    django_send_mass_mail(tuple(email_tuple_list))
+
+
+
+def send_mass_mail(form, user):
+    if can_do_async():
+        send_mass_mail_async.delay(form, user)
+
+        return True
+    else:
+        return False
+

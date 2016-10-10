@@ -1,0 +1,26 @@
+﻿{% extends "site_base.html" %}
+{% load static crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block extra_style %}
+
+{% endblock %}
+
+{% block head_title %}Send mail{% endblock %}
+{% block page_title %}Send mail{% endblock %}
+{% block page_content %}
+
+<form method="POST" action='' >
+    {% csrf_token %}
+    {{ form|crispy }}
+    
+    <input type="submit" class="btn btn-primary" value='Send' />
+    <a href='{% url "mt_mail_mailtemplate_list" %}' class="btn btn-info">Return</a>
+
+</form>
+
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ form.media }}
+{% endblock %}

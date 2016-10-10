@@ -1,16 +1,18 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class MessageMixin(SuccessMessageMixin):
     success_message = "Success!"
-    
+
+
 class FilterOwnerMixin(object, ):
     def get_queryset(self, ):
         return super(FilterOwnerMixin, self).get_queryset().filter(
             created_by=self.request.user
         )
-        
-        
+
+
 class AuditableMixin(object,):
     def form_valid(self, form, ):
         try:

@@ -31,6 +31,15 @@ class Mail(models.Model):
     cc = models.TextField(blank=True, null=True,)
     bcc = models.TextField(blank=True, null=True,)
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
+    
+    def get_tuple(self):
+        
+        return (
+            self.subject,
+            self.body,
+            self.mail_from,
+            self.mail_to.split(','),
+        )
 
 
 class EmailAddress(NamedModel):
@@ -59,3 +68,10 @@ class MailTemplate(NamedModel):
 
     def get_absolute_url(self):
         return reverse('mt_mail_mailtemplate_detail', args=[self.id] )
+        
+    def get_mail_object(self):
+        return Mail(
+            subject=self.subject,
+            body=self.body,
+            body_type=self.body_type
+        )

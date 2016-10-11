@@ -33,7 +33,9 @@
                     <ul class="list-group">
                         {{ o.emailaddress_set.all|length }} email addresses
                         <a class='btn btn-info btn-sm' href='{% url "dl_mail_distributionlist_detail" o.id %}'>Detail</a>
-                        <a class='btn btn-info btn-sm' href='{% url "dl_mail_distributionlist_update" o.id %}'>Edit</a>
+                        <a class='btn btn-primary btn-sm' href='{% url "dl_mail_distributionlist_update" o.id %}'>Edit</a>
+                        <a class='btn btn-primary btn-sm' href='{% url "dl_upload" o.id %}'>Upload emails</a>
+                        <a class='btn btn-info btn-sm' href='{% url "dl_download" o.id %}'>Download emails</a>
                         
                     </ul>
                 </div>

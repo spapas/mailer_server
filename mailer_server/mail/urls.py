@@ -6,7 +6,11 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from django.views.generic import TemplateView
 
-from mailer_server.mail.views import send_test_email, SendMailAPIView, DistributionListAutocomplete, MailTemplateAutocomplete, SendMassMailFormView, SendMassMailAPIView
+from mailer_server.mail.views import (
+    send_test_email, SendMailAPIView, DistributionListAutocomplete, 
+    MailTemplateAutocomplete, SendMassMailFormView, SendMassMailAPIView, UploadDistributionListView,
+    DownloadDistributionListView
+)
 from mailer_server.mail.scaffolding import DistributionListCrudManager, MailTemplateCrudManager
 
 urlpatterns = [
@@ -15,6 +19,9 @@ urlpatterns = [
     url(r'^api/send_mass_mail/$', SendMassMailAPIView.as_view(), name='api_send_mass_mail', ),   
     
     url(r'send_mass_mail$', SendMassMailFormView.as_view(), name='send_mass_mail'),
+    
+    url(r'^dlupload/(?P<pk>\d+)/$', UploadDistributionListView.as_view(), name='dl_upload'),
+    url(r'^dldownload/(?P<pk>\d+)/$', DownloadDistributionListView.as_view(), name='dl_download'),
     
     url(r'^distributionlist-autocomplete/$', DistributionListAutocomplete.as_view(), name='distributionlist-autocomplete', ),
     url(r'^mailtemplate-autocomplete/$', MailTemplateAutocomplete.as_view(), name='mailtemplate-autocomplete', ),

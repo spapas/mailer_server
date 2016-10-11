@@ -22,6 +22,8 @@
     <div class='col-md-12'>
         <a href='{% url "dl_mail_distributionlist_list" %}' class="btn btn-info">Return</a>
         <a class='btn btn-primary' href='{% url "dl_mail_distributionlist_update" object.id %}'>Edit</a>
+        <a class='btn btn-primary' href='{% url "dl_upload" object.id %}'>Upload emails</a>
+        <a class='btn btn-info' href='{% url "dl_download" object.id %}'>Download emails</a>
     </div>
 </div>
 

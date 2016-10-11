@@ -1,0 +1,56 @@
+﻿{% extends "site_base.html" %}
+{% load static crispy_forms_tags %}
+{% load widget_tweaks %}
+{% block extra_style %}
+
+{% endblock %}
+
+{% block head_title %}Upload distribution list{% endblock %}
+{% block page_title %}Upload distribution list for {{ form.instance.name }}{% endblock %}
+{% block page_content %}
+
+
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='alert alert-info'>
+            You may select a CSV file containing columns of the form name; email that will be used to
+            update the emails of this distribution list. The first row of the CSV should be a header
+            row and will not be taken into account.
+            
+            <h4>Characteristics of csv</h4>
+            <ul>
+                <li>Encoding: UTF-8</li>
+                <li>Field delimiter: comma (,)</li>
+                <li>Quote delimiter: quote (")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-md-12'>
+        <div class='alert alert-info'>
+            Warining: All existing emails of this list will be deleted!
+        </div>
+    </div>
+</div>
+
+<div class='row'>
+    <div class='col-md-12'>
+        <form method="POST" action='' enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            
+            <input type="submit" class="btn btn-primary" value='Upload' />
+            <a href='{% url "mt_mail_mailtemplate_list" %}' class="btn btn-info">Return</a>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_script %}
+    {{ form.media }}
+{% endblock %}

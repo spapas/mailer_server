@@ -1,0 +1,5 @@
+{
+    "mail_template": 1,
+    "distribution_list_to": 1,
+    "mail_from": "from@from.gr"
+}

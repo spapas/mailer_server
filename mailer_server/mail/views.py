@@ -17,7 +17,7 @@ from rest_framework.response import Response
 from dal import autocomplete
 
 from mailer_server.mail import jobs
-from mailer_server.mail.serializers import MailSerializer
+from mailer_server.mail.serializers import MailSerializer, MassMailSerializer
 
 from mailer_server.mail import models 
 from mailer_server.mail import forms
@@ -50,8 +50,27 @@ class SendMailAPIView(APIView):
             
             mail = serializer.save(created_by=self.request.user)
             jobs.send_mail(mail)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+        
+class SendMassMailAPIView(APIView):
+
+    def get(self, request, format=None):
+        serializer = MassMailSerializer(data=request.data)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        
+        mm_serializer = MassMailSerializer(data=request.data, )
+        
+        if mm_serializer.is_valid():
+            
+            if jobs.send_mass_mail(mm_serializer, self.request.user):
+                return Response( status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
+        return Response(mm_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
 
 class SendMassMailFormView(UserPermissionRequiredMixin, FormView):
@@ -59,8 +78,18 @@ class SendMassMailFormView(UserPermissionRequiredMixin, FormView):
     template_name = 'send_mail.html'
     
     def form_valid(self, form):
+        # Stupid DRF! I have to use a serializer here that is filled from the form to keep a common API
+        # with the jobs. Notice that I don't care about the validity of the serializer since it shoud
+        # have been validated from the form -- I just use is_valid to allow saving in the job 
         
-        if jobs.send_mass_mail(form, self.request.user):
+        mm_serializer  = MassMailSerializer(data={
+            'mail_template': form.cleaned_data['mail_template'].id, 
+            'distribution_list_to': form.cleaned_data['distribution_list'].id, 
+            'mail_from': form.cleaned_data['from_address'], 
+        })
+        mm_serializer.is_valid()
+        if jobs.send_mass_mail(mm_serializer, self.request.user):
+            
             messages.info(self.request, 'Started sending emails!')
         else:
             messages.info(self.request, 'Not able to send any emails!')

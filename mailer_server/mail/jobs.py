@@ -70,24 +70,16 @@ def send_mail(mail):
 
 
 @job
-def send_mass_mail_async(form, user):
+def send_mass_mail_async(mm_serializer, user):
     task = Task.objects.create(
         name='send_mass_mail',
         started_by=user
     )
 
-    mail_from = form.cleaned_data['from_address']
-    distribution_list = form.cleaned_data['distribution_list']
-    mail_template = form.cleaned_data['mail_template']
-
-    email_list = []
+    mass_mail = mm_serializer.save(created_by=user)
+    email_list = mass_mail.get_mails()
     email_tuple_list = []
-    for address in distribution_list.emailaddress_set.all():
-        mail = mail_template.get_mail_object()
-        mail.created_by = user
-        mail.mail_from = mail_from
-        mail.mail_to = address.email
-        email_list.append(mail)
+    for mail in email_list:
         email_tuple_list.append(mail.get_tuple())
 
     Mail.objects.bulk_create(email_list)
@@ -95,9 +87,9 @@ def send_mass_mail_async(form, user):
 
 
 
-def send_mass_mail(form, user):
+def send_mass_mail(mass_mail, user):
     if can_do_async():
-        send_mass_mail_async.delay(form, user)
+        send_mass_mail_async.delay(mass_mail, user)
 
         return True
     else:

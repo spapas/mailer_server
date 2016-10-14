@@ -20,5 +20,5 @@ Requirements
 8. cd /home/serafeim/mailer_server/mailer_server/mailer_server/settings/
 9. cp local.py.template local.py
 10. Edit local.py
-11. echo export DJANGO_SETTINGS_MODULE=dgul.settings.prod >> /home/serafeim/mailer_server/venv/bin/activate
+11. echo export DJANGO_SETTINGS_MODULE=mailer_server.settings.prod >> /home/serafeim/mailer_server/venv/bin/activate
 

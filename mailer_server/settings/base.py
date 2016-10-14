@@ -149,7 +149,7 @@ SESSION_COOKIE_SECURE = True # Careful this allows session to work only on HTTPS
 CSRF_COOKIE_SECURE = True # Careful this allows CSRF to work only on HTTPS on production
 CSRF_COOKIE_HTTPONLY = True
 
-ADMINS = MANAGERS = [('Serafeim Papastefanos', 'spapas@hcg.gr'), ]
+ADMINS = MANAGERS = [('Serafeim Papastefanos', 'spapas@gmail.com'), ]
 
 # Default for django-filter
 FILTERS_HELP_TEXT_EXCLUDE = True
@@ -157,13 +157,8 @@ FILTERS_HELP_TEXT_FILTER = False
 
 # EMAIL cfg
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.hcg.gr'
-MAIL_PORT = 587
-EMAIL_HOST_USER = 'noreply@hcg.gr'
-SERVER_EMAIL = 'noreply@hcg.gr'
-EMAIL_HOST_PASSWORD = '' # Configure me in local.py
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'noreply@hcg.gr'
+# Configure other options local.py
+
 
 # crispy forms template pack
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

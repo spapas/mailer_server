@@ -2,6 +2,7 @@
 
 SECRET_KEY = 'overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjmailer_serverdlkdfgdfg'
 
+# Configure your database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -11,5 +12,31 @@ DATABASES = {
         'HOST': '',
         'PORT': '',
         'ATOMIC_REQUESTS': True,
+    }
+}
+
+# Configure your mail server 
+EMAIL_HOST = 'mail.mail.gr'
+MAIL_PORT = 587 
+EMAIL_HOST_USER = 'noreply@mail.gr' 
+DEFAULT_FROM_EMAIL = 'noreply@mail.gr'
+SERVER_EMAIL = 'noreply@mail.gr' 
+EMAIL_HOST_PASSWORD = '' 
+EMAIL_USE_TLS = True
+
+# Configure your static and media roots and urls
+STATIC_ROOT = '/home/serafeim/mailer_server/static'
+STATIC_URL = '/static_mailer_server/'
+MEDIA_URL = '/media_mailer_server/'
+MEDIA_ROOT = '/home/serafeim/mailer_server/media'
+
+# Configure redis 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "unix://tmp/redis-mailer_server.sock?db=0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }

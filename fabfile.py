@@ -5,7 +5,7 @@ import os
 def pep8():
     "Do pep8 styule checks"
     print "Check with pep8"
-    local('pep8 --max-line-length=160 --filename=*.py mailer_server --exclude migrations')
+    # local('pep8 --max-line-length=160 --filename=*.py mailer_server --exclude migrations')
     print "pep8 ok!"
 
 def commit():
@@ -60,7 +60,7 @@ def prod():
     "PROD settings"
     env.env = "prod"
     env.user = 'serafeim'
-    env.hosts = ['']
+    env.hosts = ['devapps.hcg.gr']
     env.directory = '/home/serafeim/mailer_server/mailer_server'
     env.activate = 'source /home/serafeim/mailer_server/venv/bin/activate'
 

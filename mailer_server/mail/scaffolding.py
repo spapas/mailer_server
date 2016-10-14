@@ -4,11 +4,14 @@ from django.http import HttpResponseRedirect
 from generic_scaffold import CrudManager
 import mailer_server.mail.models
 import mailer_server.mail.forms
+import mailer_server.mail.mixins
 import mailer_server.core.mixins
 
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
 user_permission_required = permission_required('core.user')
+
+
 
 class DistributionListCreateView(CreateWithInlinesView):
     model = mailer_server.mail.models.DistributionList
@@ -45,8 +48,6 @@ class DistributionListUpdateView(UpdateWithInlinesView):
 
     def get_context_data(self, **kwargs):
         context = super(DistributionListUpdateView, self).get_context_data(**kwargs)
-        #a+=1
-
         return context
 
 
@@ -60,7 +61,7 @@ class DistributionListCrudManager(CrudManager):
 
     update_mixins = [mailer_server.core.mixins.MessageMixin, mailer_server.core.mixins.FilterOwnerMixin]
     detail_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
-    list_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
+    list_mixins = [mailer_server.core.mixins.FilterOwnerMixin, mailer_server.mail.mixins.DistributionListTableMixin]
     delete_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
 
     create_view_class = DistributionListCreateView
@@ -73,6 +74,9 @@ class DistributionListCrudManager(CrudManager):
         'create': user_permission_required,
         'detail': user_permission_required,
     }
+    
+    
+
 
 
 class MailTemplateCrudManager(CrudManager):
@@ -84,7 +88,7 @@ class MailTemplateCrudManager(CrudManager):
 
     update_mixins = [mailer_server.core.mixins.MessageMixin, mailer_server.core.mixins.FilterOwnerMixin, mailer_server.core.mixins.AuditableMixin]
     detail_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
-    list_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
+    list_mixins = [mailer_server.core.mixins.FilterOwnerMixin, mailer_server.mail.mixins.MailTemplateTableMixin]
     delete_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
 
     permissions = {

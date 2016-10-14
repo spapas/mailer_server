@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 from django.shortcuts import render
 from django.urls import reverse
@@ -19,11 +19,12 @@ from rest_framework.response import Response
 
 from dal import autocomplete
 
+from django_tables2 import SingleTableMixin
+
 from mailer_server.mail import jobs
 from mailer_server.mail.serializers import MailSerializer, MassMailSerializer
 
-from mailer_server.mail import models
-from mailer_server.mail import forms
+from mailer_server.mail import models, forms, tables
 
 from mailer_server.core.mixins import FilterOwnerMixin
 
@@ -145,10 +146,20 @@ class DownloadDistributionListView(DetailView):
     def render_to_response(self, context, **response_kwargs):
         response = HttpResponse(content_type='text/plain; charset=utf-8')
         response['Content-Disposition'] = 'attachment; filename=export.csv'
-        
+
         w = csv.writer(response, encoding='utf-8', delimiter=',', quotechar='"')
         w.writerow(('name', 'email', ))
         for email in self.object.emailaddress_set.all().order_by('name', 'email', ):
             w.writerow((email.name, email.email))
-        
+
         return response
+
+
+class MailListView(FilterOwnerMixin, SingleTableMixin, ListView):
+    model = models.Mail
+    table_class = tables.MailTable
+
+
+class MassMailListView(FilterOwnerMixin, SingleTableMixin, ListView):
+    model = models.MassMail
+    table_class = tables.MassMailTable

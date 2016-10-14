@@ -20,28 +20,9 @@
 {% block page_content %}
 
 <div class='row'>
-    {% for o in object_list %}
-        <div class='col-md-4'>
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <span>{{ o.id }}: {{ o.name }}</span>
-                        
-                    </h3>
-                </div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        Subject: {{ o.subject }}
-                        <a class='btn btn-info btn-sm' href='{% url "mt_mail_mailtemplate_detail" o.id %}'>Detail</a>
-                        <a class='btn btn-info btn-sm' href='{% url "mt_mail_mailtemplate_update" o.id %}'>Edit</a>
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-    {% empty %}
-        <div class='col-md-12'>No mail templates!</div>
-    {% endfor %}
+    <div class='col-md-12'>
+        {% render_table table %}
+    </div>
 </div>
 <div class='row'>
     <div class='col-md-12'>

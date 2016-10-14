@@ -76,6 +76,9 @@
                     <a class='btn btn-primary' href='{% url "dl_mail_distributionlist_list" %}'>My distribution lists</a>
                     <a class='btn btn-primary' href='{% url "mt_mail_mailtemplate_list" %}'>My mail templates</a>
                     <a class='btn btn-primary' href='{% url "send_mass_mail" %}'>Send mass mail</a>
+                    
+                    <a class='btn btn-primary' href='{% url "mail_list" %}'>Mail list</a>
+                    <a class='btn btn-primary' href='{% url "mass_mail_list" %}'>Mass mail list</a>
                 {% endif %}
                 
             {% else %}

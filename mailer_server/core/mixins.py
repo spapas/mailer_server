@@ -8,7 +8,14 @@ class MessageMixin(SuccessMessageMixin):
 
 class FilterOwnerMixin(object, ):
     def get_queryset(self, ):
-        return super(FilterOwnerMixin, self).get_queryset().filter(
+        qs = super(FilterOwnerMixin, self).get_queryset()
+        
+        # Admin sees all objects
+        if self.request.user.has_perm('core.admin'):
+            return  qs 
+            
+        # Other users see only their own
+        return qs.filter(
             created_by=self.request.user
         )
 

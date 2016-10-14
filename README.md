@@ -17,4 +17,8 @@ Requirements
 5. mkdir static
 6. cd /home/serafeim/mailer_server/mailer_server
 7. pip install -r requirements/prod.txt
+8. cd /home/serafeim/mailer_server/mailer_server/mailer_server/settings/
+9. cp local.py.template local.py
+10. Edit local.py
+11. echo export DJANGO_SETTINGS_MODULE=dgul.settings.prod >> /home/serafeim/mailer_server/venv/bin/activate
 

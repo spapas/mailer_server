@@ -9,7 +9,6 @@ INSTALLED_APPS += (
 )
 
 
-
 try:
     from .local import *
 except ImportError:

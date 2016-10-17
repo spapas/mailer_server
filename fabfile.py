@@ -35,7 +35,7 @@ def work():
 
 def touch_wsgi():
     print("Restarting uwsgi");
-    run("uwsgi --reload /tmp/mailer_server.pid")
+    run("uwsgi --reload /home/serafeim/mailer_server/mailer_server.pid")
 
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"

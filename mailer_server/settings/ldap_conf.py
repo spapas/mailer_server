@@ -1,6 +1,8 @@
 import ldap
 from django_auth_ldap.config import LDAPSearch, LDAPSearchUnion
 
+from local import LDAP_SERVER_URI, LDAP_USER_SEARCH
+
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_SERVER_URI = LDAP_SERVER_URI

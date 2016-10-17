@@ -2,6 +2,8 @@
 
 SECRET_KEY = 'overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjmailer_serverdlkdfgdfg'
 
+ALLOWED_HOSTS = ['host1.host.gr']
+
 # Configure your database
 DATABASES = {
     'default': {

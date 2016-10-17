@@ -14,6 +14,12 @@ Requirements
 - uwsgi (recommended - you can use any wsgi server you want, i.e gunicorn, apache mod_wsgi etc)
 - nginx (recommended - you can use any web server you want)
 
+Configuring redis
+If you want to use my configuration (from /etc)
+1. mkdir /home/serafeim/mailer_server/redis/
+1. use provided /etc/redis.conf for redis configuration
+1. If you want to use supervisord, you can use provided /etc/mail-server-redis-supervisord.conf
+
 
 
 1. Create a database named mailer_server

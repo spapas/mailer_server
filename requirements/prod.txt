@@ -2,3 +2,4 @@
 
 raven==5.21.0
 psycopg2==2.6.2
+whitenoise==3.2.2

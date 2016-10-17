@@ -19,6 +19,9 @@ STATICFILES_FINDERS = (
 
 MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware', )
 
+# I recommend disabling these for production
+CSRF_COOKIE_SECURE = False # Override CSRF to work also with http
+SESSION_COOKIE_SECURE = False # Override session to work also with http
 
 try:
     from .local import *

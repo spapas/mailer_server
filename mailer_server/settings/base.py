@@ -164,8 +164,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 CONSTANCE_CONFIG = {
-    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, '
-                       'The Universe, and Everything'),
+    'THE_ANSWER': (42, 'Answer to the Ultimate Question of Life, ' 'The Universe, and Everything'),
 }
 
 CONSTANCE_REDIS_CONNECTION_CLASS = 'django_redis.get_redis_connection'

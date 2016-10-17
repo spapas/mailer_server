@@ -170,11 +170,7 @@ CONSTANCE_CONFIG = {
 CONSTANCE_REDIS_CONNECTION_CLASS = 'django_redis.get_redis_connection'
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 
-from .ldap_conf import *
-AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
-    'mailer_server.core.auth.NoLoginModelBackend',
-)
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

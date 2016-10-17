@@ -32,6 +32,9 @@ STATIC_URL = '/static_mailer_server/'
 MEDIA_URL = '/media_mailer_server/'
 MEDIA_ROOT = '/home/serafeim/mailer_server/media'
 
+LDAP_SERVER_URI = "ldap://login.server.gr"
+LDAP_USER_SEARCH = "ou=People,dc=server,dc=gr"
+
 # Configure redis 
 CACHES = {
     "default": {

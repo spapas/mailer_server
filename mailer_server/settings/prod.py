@@ -23,7 +23,14 @@ MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware', )
 CSRF_COOKIE_SECURE = False # Override CSRF to work also with http
 SESSION_COOKIE_SECURE = False # Override session to work also with http
 
-try:
-    from .local import *
-except ImportError:
-    pass
+
+from .local import *
+    
+from .ldap_conf import *
+
+
+
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
+    'mailer_server.core.auth.NoLoginModelBackend',
+)

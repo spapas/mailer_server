@@ -36,7 +36,7 @@ MEDIA_ROOT = '/home/serafeim/mailer_server/media'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "unix://tmp/redis-mailer_server.sock?db=0",
+        "LOCATION": "unix:///tmp/redis-mailer_server.sock?db=0",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }

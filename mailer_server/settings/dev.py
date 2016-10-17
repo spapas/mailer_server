@@ -8,6 +8,8 @@ SITE_ID = 1
 INSTALLED_APPS += (
     'debug_toolbar',
 )
+DEBUG_TOOLBAR_PATCH_SETTINGS = False
+INTERNAL_IPS = ['127.0.0.1', ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
@@ -16,6 +18,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
+TEMPLATES[0]['OPTIONS']['debug'] = True
 
 AUTHENTICATION_BACKENDS += (
     'django.contrib.auth.backends.ModelBackend',

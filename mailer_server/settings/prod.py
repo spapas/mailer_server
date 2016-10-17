@@ -9,11 +9,15 @@ INSTALLED_APPS += (
     'raven.contrib.django.raven_compat',
 )
 
+INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic', )
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware', )
 
 
 try:

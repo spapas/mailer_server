@@ -1,8 +1,8 @@
 ﻿{% extends "site_base.html" %}
 {% load static crispy_forms_tags %}
 {% load widget_tweaks %}
-{% block extra_style %}
-    {{ form.media.css }}
+{% block extra_style_ %}
+    
 {% endblock %}
 
 {% block head_title %}Send mail{% endblock %}
@@ -21,6 +21,6 @@
 
 {% endblock %}
 
-{% block extra_script %}
-    {{ form.media.js }}
+{% block extra_script_no_compress %}
+    {{ form.media }}
 {% endblock %}

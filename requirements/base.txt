@@ -17,6 +17,7 @@ django-tables2==1.2.6
 django-widget-tweaks==1.4.1
 djangorestframework==3.4.7
 python-ldap==2.4.25
+python-magic==0.4.12
 redis==2.10.5
 rq==0.6.0
 six==1.10.0

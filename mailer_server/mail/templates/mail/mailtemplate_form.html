@@ -1,18 +1,93 @@
 ﻿{% extends "site_base.html" %}
-{% load static crispy_forms_tags %}
+{% load static crispy_forms_tags crispy_forms_filters %}
 {% load widget_tweaks %}
 {% block extra_style %}
-
+<style>
+    .delete-row {
+        color: #fff;
+        background-color: #31b0d5;
+        border-color: #269abc;
+        display: inline;
+        margin: auto;
+        font-weight: 400;
+        line-height: 1.25;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        
+        border: 1px solid transparent;
+        padding: .5rem 1rem;
+        
+        border-radius: .25rem;
+    }
+</style>
 {% endblock %}
 
 {% block head_title %}Update mail template{% endblock %}
 {% block page_title %}Update mail template{% endblock %}
 {% block page_content %}
 
-<form method="POST" action='' >
+<form method="POST" action='' enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form|crispy }}
     
+    
+    <div class='row'>
+        <div class='col-md-12'>
+            {{ form.name|as_crispy_field }}
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            {{ form.subject|as_crispy_field }}
+        </div>
+        <div class='col-md-6'>
+            {{ form.body|as_crispy_field }}
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-12'>
+            {{ form.body_type|as_crispy_field }}
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            {{ form.mail_from|as_crispy_field }}
+        </div>
+        <div class='col-md-6'>
+            {{ form.reply_to|as_crispy_field }}
+        </div>
+    </div>
+    
+    
+    <h3>Attachments on this email template</h3>
+    {% for formset in inlines %}
+        <table border="0" cellpadding="0" cellspacing="0" class='table table-condensed' >
+            <thead>
+            
+            </thead>
+            
+            <tbody>
+                {% for form in formset %}
+                <tr>
+                    <td>
+                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                        {{ form.name|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{ form.content|as_crispy_field }}
+                    </td>
+                    <td>
+                        {{ form.id }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+        {{ formset.management_form }}
+    {% endfor %}
+
     <input type="submit" class="btn btn-primary" value='Save' />
     <a href='{% url "mt_mail_mailtemplate_list" %}' class="btn btn-info">Return</a>
 
@@ -22,5 +97,21 @@
 {% endblock %}
 
 {% block extra_script %}
+    <script src="{% static 'jquery.formset.min.js' %}"></script>
+    <script>
     
+    var addedRow = function(row) {
+        console.log(row);
+    }
+    
+    $(function() {
+        $('tr').formset({
+            prefix: '{{ inlines.0.prefix }}',
+            addCssClass: 'btn btn-info'
+            
+            
+        });
+    })
+    
+    </script>
 {% endblock %}

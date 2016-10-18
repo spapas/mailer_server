@@ -1,8 +1,27 @@
 ﻿{% extends "site_base.html" %}
-{% load static crispy_forms_tags %}
+{% load static crispy_forms_tags crispy_forms_filters %}
 {% load widget_tweaks %}
 {% block extra_style %}
-
+    <style>
+        .delete-row {
+            color: #fff;
+            background-color: #31b0d5;
+            border-color: #269abc;
+            display: inline;
+            margin: auto;
+            font-weight: 400;
+            line-height: 1.25;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            
+            border: 1px solid transparent;
+            padding: .5rem 1rem;
+            
+            border-radius: .25rem;
+        }
+    </style>
 {% endblock %}
 
 {% block head_title %}Update distribution list{% endblock %}
@@ -11,28 +30,28 @@
 
 <form method="POST" action='' >
     {% csrf_token %}
-    {{ form|crispy }}
+    <div class='row'>
+        <div class='col-md-12'>
+            {{ form.name|as_crispy_field }}
+        </div>
+    </div>
+    <h3>Emails on this distribution list</h3>
     {% for formset in inlines %}
         <table border="0" cellpadding="0" cellspacing="0" class='table table-condensed' >
             <thead>
-            <tr>
-                <td>Name</td>
-                <td>Email</td>
-                <td>Remove</td>
-            </tr>
+
             </thead>
             
             <tbody>
                 {% for form in formset %}
                 <tr>
-                    
-                    
                     <td>
                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                        {{ form.name|add_class:"form-control" }}
+                        {{ form.name|as_crispy_field }}
+                        
                     </td>
                    <td>
-                        {{ form.email|add_class:"form-control" }}
+                        {{ form.email|as_crispy_field }}
                     </td>
                     <td>
                         {{ form.id }}
@@ -65,7 +84,6 @@
         $('tr').formset({
             prefix: '{{ inlines.0.prefix }}',
             addCssClass: 'btn btn-info'
-            
             
         });
     })

@@ -2,6 +2,7 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail as django_send_mail

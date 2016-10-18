@@ -10,7 +10,7 @@ BODY_TYPE_CHOICES = (
 
 
 class NamedModel(models.Model):
-    name = models.CharField(max_length=128, )
+    name = models.CharField(max_length=128, help_text='Please enter a name for this object', )
 
     def __unicode__(self):
         return self.name
@@ -26,7 +26,8 @@ class Mail(models.Model):
     subject = models.TextField()
     body = models.TextField()
 
-    mail_from = models.EmailField()
+    mail_from = models.EmailField(blank=True, null=True, )
+    reply_to = models.EmailField(blank=True, null=True, )
     mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)' )
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
@@ -47,7 +48,6 @@ class MassMail(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-    mail_from = models.EmailField()
     mail_template = models.ForeignKey('MailTemplate')
 
     distribution_list_to = models.ForeignKey('DistributionList')
@@ -57,8 +57,6 @@ class MassMail(models.Model):
         for address in self.distribution_list_to.emailaddress_set.all():
             mail = self.mail_template.get_mail_object()
             mail.created_by = self.created_by
-
-            mail.mail_from = self.mail_from
             mail.mail_to = address.email
             email_list.append(mail)
         return email_list
@@ -85,8 +83,11 @@ class MailTemplate(NamedModel):
     modified_on = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
 
-    subject = models.TextField()
-    body = models.TextField()
+    subject = models.TextField(help_text='Enter the subject of this template', )
+    body = models.TextField(help_text='Enter the body of this template - can be either plain text or html depending on body type')
+    
+    mail_from = models.EmailField(blank=True, null=True, help_text='Enter a mail from - you may leave it empty to use the default mail from',)
+    reply_to = models.EmailField(blank=True, null=True, help_text='Enter an optional reply to email',)
 
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
 
@@ -99,3 +100,9 @@ class MailTemplate(NamedModel):
             body=self.body,
             body_type=self.body_type
         )
+
+
+class MailAttachment(NamedModel):
+    mail_template = models.ForeignKey('MailTemplate')
+    content = models.FileField(help_text='Pick a file to use as the content of this mail attachment')
+    content_type = models.CharField(max_length=128, default='text/plain', )

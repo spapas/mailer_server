@@ -20,7 +20,8 @@ TEMPLATES[0]['OPTIONS']['loaders'] = (
 )
 TEMPLATES[0]['OPTIONS']['debug'] = True
 
-AUTHENTICATION_BACKENDS += (
+AUTHENTICATION_BACKENDS = (
+    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -41,10 +42,8 @@ CACHES = {
     }
 }
 
-try:
-    from .local import *
-except ImportError as e:
-    print e
+from .local import *
+from .ldap_conf import *
     
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())

@@ -2,6 +2,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.http import HttpResponseRedirect
 
 from generic_scaffold import CrudManager
+
+
 import mailer_server.mail.models
 import mailer_server.mail.forms
 import mailer_server.mail.mixins
@@ -11,6 +13,18 @@ from extra_views import CreateWithInlinesView, UpdateWithInlinesView
 
 user_permission_required = permission_required('core.user')
 
+try:
+    import magic
+    mime = magic.Magic(mime=True, magic_file='c:/util/magic_file')
+    
+    def get_content_type(f):
+        return mime.from_buffer(f)
+        
+except:
+    # If magic is not configured correctly, just return a default mimetype
+    print "magic is not configured correctly - will just return octet-stream for file content type"
+    def get_content_type(f):
+        return 'application/octet-stream'
 
 
 class DistributionListCreateView(CreateWithInlinesView):
@@ -74,8 +88,55 @@ class DistributionListCrudManager(CrudManager):
         'create': user_permission_required,
         'detail': user_permission_required,
     }
-    
-    
+
+
+class MailTemplateCreateView(CreateWithInlinesView):
+    model = mailer_server.mail.models.MailTemplate
+    inlines = [mailer_server.mail.forms.MailAttachmentInline, ]
+
+    def forms_valid(self, form, inlines):
+        dl = form.save(commit=False)
+        dl.created_by = self.request.user
+        dl.save()
+        self.object = dl
+        for formset in inlines:
+
+            
+            for f in formset:
+                if f.cleaned_data:
+                    f.instance.content_type = get_content_type(f)
+            formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+
+class MailTemplateUpdateView(UpdateWithInlinesView):
+    model = mailer_server.mail.models.MailTemplate
+    inlines = [mailer_server.mail.forms.MailAttachmentInline, ]
+
+    def forms_valid(self, form, inlines):
+        dl = form.save(commit=False)
+        dl.created_by = self.request.user
+        dl.save()
+        self.object = dl
+        for formset in inlines:
+            
+            
+            mime = magic.Magic(mime=True, magic_file='c:/util/magic_file')
+            for f in formset:
+                if f.cleaned_data:
+                    f.instance.content_type = get_content_type(f)
+            formset.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(MailTemplateUpdateView, self).get_context_data(**kwargs)
+        return context
 
 
 
@@ -90,6 +151,9 @@ class MailTemplateCrudManager(CrudManager):
     detail_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
     list_mixins = [mailer_server.core.mixins.FilterOwnerMixin, mailer_server.mail.mixins.MailTemplateTableMixin]
     delete_mixins = [mailer_server.core.mixins.FilterOwnerMixin]
+
+    create_view_class = MailTemplateCreateView
+    update_view_class = MailTemplateUpdateView
 
     permissions = {
         'list': user_permission_required,

@@ -12,6 +12,12 @@ class EmailAddressInline(InlineFormSet):
     fields = ('name', 'email', )
     extra=1
     
+    
+class MailAttachmentInline(InlineFormSet):
+    model = models.MailAttachment
+    fields = ('name', 'content', )
+    extra=1
+    
 
 class DistributionListForm(forms.ModelForm):
     class Meta:
@@ -21,8 +27,8 @@ class DistributionListForm(forms.ModelForm):
         
 class MailTemplateForm(forms.ModelForm):
     class Meta:
-        fields = ('name', 'subject', 'body', 'body_type', )
-        model = models.MailTemplate
+        fields = ('name', 'subject', 'body', 'body_type', 'mail_from', 'reply_to', )
+        model = models.MailTemplate         
 
         
 class SendMailForm(forms.Form):

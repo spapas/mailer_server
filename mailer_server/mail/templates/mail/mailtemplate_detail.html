@@ -16,6 +16,10 @@
     <div class='col-md-6'>Body type: {{ object.body_type }}</div>
 </div>
 <div class='row'>
+    <div class='col-md-6'>Mail from: {{ object.mail_from }}</div>
+    <div class='col-md-6'>Reply to: {{ object.reply_to }}</div>
+</div>
+<div class='row'>
     <div class='col-md-12'>
         <h3>Body</h3>
         {% if object.body_type == 'html' %}
@@ -25,6 +29,23 @@
         {% endif %}
     </div>
 </div>
+
+
+<h3>Attachments</h3>
+<table class='table table-contensed'>
+    <thead>
+        <tr>
+            <th>Name</th><th>File</th><th>Content type</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for ma in object.mailattachment_set.all %}
+            <tr>
+                <td>{{ ma.name }}</td><td>{{ ma.content }}</td><td>{{ ma.content_type }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 
 <div class='row'>

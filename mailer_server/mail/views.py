@@ -74,6 +74,7 @@ class SendMassMailAPIView(APIView):
             if jobs.send_mass_mail(mm_serializer, self.request.user):
                 return Response( status=status.HTTP_200_OK)
             else:
+                print "Cannot send mails - service not available!"
                 return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response(mm_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -90,7 +91,6 @@ class SendMassMailFormView(UserPermissionRequiredMixin, FormView):
         mm_serializer  = MassMailSerializer(data={
             'mail_template': form.cleaned_data['mail_template'].id,
             'distribution_list_to': form.cleaned_data['distribution_list'].id,
-            'mail_from': form.cleaned_data['from_address'],
         })
         mm_serializer.is_valid()
         if jobs.send_mass_mail(mm_serializer, self.request.user):

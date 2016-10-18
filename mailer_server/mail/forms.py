@@ -32,7 +32,6 @@ class MailTemplateForm(forms.ModelForm):
 
         
 class SendMailForm(forms.Form):
-    from_address = forms.EmailField()
 
     distribution_list = forms.ModelChoiceField(
         queryset=models.DistributionList.objects.all(),

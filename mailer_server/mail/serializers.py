@@ -18,7 +18,7 @@ class MassMailSerializer(serializers.ModelSerializer):
     class Meta:
         model = MassMail
         fields = (
-            'id', 'mail_template', 'mail_from',
+            'id', 'mail_template', 
             'distribution_list_to', 'created_on', 'created_by',
 
         )

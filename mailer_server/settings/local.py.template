@@ -45,3 +45,6 @@ CACHES = {
         }
     }
 }
+
+# Configure your magic file path if needed
+# MAGIC_FILE_PATH = '/etc/magic'

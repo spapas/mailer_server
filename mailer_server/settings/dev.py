@@ -48,3 +48,5 @@ from .ldap_conf import *
 logger = logging.getLogger('django_auth_ldap')
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.DEBUG) 
+
+MAGIC_FILE_PATH = 'c:/util/magic_file'

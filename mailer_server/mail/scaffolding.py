@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, permission_required
+from django.conf import settings
 from django.http import HttpResponseRedirect
 
 from generic_scaffold import CrudManager
@@ -15,7 +16,7 @@ user_permission_required = permission_required('core.user')
 
 try:
     import magic
-    mime = magic.Magic(mime=True, magic_file='c:/util/magic_file')
+    mime = magic.Magic(mime=True, magic_file=settings.MAGIC_FILE_PATH)
     
     def get_content_type(f):
         return mime.from_buffer(f)

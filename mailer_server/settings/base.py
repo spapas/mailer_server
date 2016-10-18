@@ -181,3 +181,4 @@ REST_FRAMEWORK = {
     )
 }
 
+MAGIC_FILE_PATH = '/etc/magic'

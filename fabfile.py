@@ -30,8 +30,8 @@ def work():
             virtualenv('pip install -r {0}'.format(requirements_txt) )
         virtualenv('python manage.py migrate')
         virtualenv('python manage.py update_permissions')
+        virtualenv('python manage.py compress --force')
         virtualenv('python manage.py collectstatic --noinput')
-        virtualenv('python manage.py compress')
 
 def touch_wsgi():
     print("Restarting uwsgi");

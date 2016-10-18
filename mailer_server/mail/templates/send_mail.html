@@ -2,7 +2,7 @@
 {% load static crispy_forms_tags %}
 {% load widget_tweaks %}
 {% block extra_style %}
-
+    {{ form.media.css }}
 {% endblock %}
 
 {% block head_title %}Send mail{% endblock %}
@@ -22,5 +22,5 @@
 {% endblock %}
 
 {% block extra_script %}
-    {{ form.media }}
+    {{ form.media.js }}
 {% endblock %}

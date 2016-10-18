@@ -101,6 +101,12 @@ class MailTemplate(NamedModel):
     def get_mail_object(self):
         return Mail(
             mail_template=self, 
+            subject=self.subject[:32],
+            body=self.body[:32],
+            mail_from=self.mail_from,
+            reply_to=self.reply_to,
+            body_type=self.body_type,
+            
         )
 
 

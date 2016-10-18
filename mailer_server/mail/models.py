@@ -23,11 +23,15 @@ class Mail(models.Model):
     "A model to save sent mails in the database"
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
-    subject = models.TextField()
-    body = models.TextField()
+    
+    mail_template = models.ForeignKey('MailTemplate', blank=True, null=True, )
+    
+    subject = models.TextField(blank=True, null=True, )
+    body = models.TextField(blank=True, null=True, )
 
     mail_from = models.EmailField(blank=True, null=True, )
     reply_to = models.EmailField(blank=True, null=True, )
+    
     mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)' )
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
@@ -96,9 +100,7 @@ class MailTemplate(NamedModel):
 
     def get_mail_object(self):
         return Mail(
-            subject=self.subject,
-            body=self.body,
-            body_type=self.body_type
+            mail_template=self, 
         )
 
 

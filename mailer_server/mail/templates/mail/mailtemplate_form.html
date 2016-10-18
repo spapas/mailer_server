@@ -96,7 +96,7 @@
 
 {% endblock %}
 
-{% block extra_script %}
+{% block extra_script_no_compress %}
     <script src="{% static 'jquery.formset.min.js' %}"></script>
     <script>
     
@@ -108,7 +108,6 @@
         $('tr').formset({
             prefix: '{{ inlines.0.prefix }}',
             addCssClass: 'btn btn-info'
-            
             
         });
     })

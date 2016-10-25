@@ -2,7 +2,7 @@
 import datetime
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, get_connection
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail as django_send_mail
@@ -19,14 +19,15 @@ from mailer_server.mail.models import Mail
 
 
 @job
-def send_email_async(subject, body, email_from, email_to, task):
+def send_email_async(email_object, task):
     "A job to send email"
 
     job = get_current_job()
     job_id = job.get_id()
+    
+    email_object.send()
 
-    django_send_mail(subject, body, email_from, email_to)
-
+    task.job_id = job_id
     task.finished_on = timezone.now()
     task.result = "OK"
     task.save()
@@ -41,6 +42,7 @@ def can_do_async():
 
 email_from = 'noreply@hcg.gr'
 
+
 def send_test_mail(user):
     email_to = settings.ADMINS
     body = "TEST email from {0}".format(user)
@@ -51,22 +53,27 @@ def send_test_mail(user):
             started_by=user,
             result='NOT STARTED',
         )
-        send_email_async.delay(subject, body, email_from, email_to, task)
+        email_object = EmailMessage(
+            subject=subject,
+            body=body,
+            from_email=email_from,
+            to=email_to,
+        )
+        send_email_async.delay(email_object, task)
 
     else:
         django_send_mail(subject, body, email_from, email_to)
 
 
-
 def send_mail(mail):
-    mail_to = mail.mail_to.split(',')
     if can_do_async():
         task = Task.objects.create(
             name='send_mail',
             started_by=mail.created_by
         )
-        send_email_async.delay(mail.subject, mail.body, mail.mail_from, mail_to, task)
+        send_email_async.delay(mail.get_email_object(), task)
     else:
+        mail_to = mail.mail_to.split(',')
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)
 
 
@@ -78,14 +85,13 @@ def send_mass_mail_async(mm_serializer, user):
     )
 
     mass_mail = mm_serializer.save(created_by=user)
-    email_list = mass_mail.get_mails()
-    email_tuple_list = []
-    for mail in email_list:
-        email_tuple_list.append(mail.get_tuple())
-
-    Mail.objects.bulk_create(email_list)
-    django_send_mass_mail(tuple(email_tuple_list))
-
+    mail_list = mass_mail.get_mails()
+    email_list = mass_mail.get_emails()
+    
+    Mail.objects.bulk_create(mail_list)
+    connection = get_connection()
+    connection.send_messages(email_list)
+    #django_send_mass_mail(tuple(email_tuple_list))
 
 
 def send_mass_mail(mass_mail, user):
@@ -95,4 +101,3 @@ def send_mass_mail(mass_mail, user):
         return True
     else:
         return False
-

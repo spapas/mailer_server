@@ -105,7 +105,7 @@ class MailTemplateCreateView(CreateWithInlinesView):
             
             for f in formset:
                 if f.cleaned_data:
-                    f.instance.content_type = get_content_type(f)
+                    f.instance.content_type = get_content_type(f.cleaned_data['content'].read())
             formset.save()
         return HttpResponseRedirect(self.get_success_url())
 
@@ -128,7 +128,7 @@ class MailTemplateUpdateView(UpdateWithInlinesView):
             mime = magic.Magic(mime=True, magic_file='c:/util/magic_file')
             for f in formset:
                 if f.cleaned_data:
-                    f.instance.content_type = get_content_type(f)
+                    f.instance.content_type = get_content_type(f.cleaned_data['content'].read())
             formset.save()
         return HttpResponseRedirect(self.get_success_url())
 

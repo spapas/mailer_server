@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.conf import settings
+from django.core.mail import EmailMessage
 from django.core.urlresolvers import reverse
 from django.db import models
 
@@ -23,28 +24,44 @@ class Mail(models.Model):
     "A model to save sent mails in the database"
     created_on = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
-    
+
     mail_template = models.ForeignKey('MailTemplate', blank=True, null=True, )
-    
+
     subject = models.TextField(blank=True, null=True, )
     body = models.TextField(blank=True, null=True, )
 
     mail_from = models.EmailField(blank=True, null=True, )
     reply_to = models.EmailField(blank=True, null=True, )
-    
+
     mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)' )
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
 
     def get_tuple(self):
-
         return (
             self.subject,
             self.body,
             self.mail_from,
             self.mail_to.split(','),
         )
+        
+    def get_email_object(self, connection=None, attachments=None):
+        email = EmailMessage(
+            subject=self.subject,
+            body=self.body,
+            from_email=self.mail_from,
+            to=self.mail_to.split(','),
+            bcc=self.bcc.split(',') if self.bcc else None,
+            connection=connection,
+            attachments=attachments,
+            cc=self.cc.split(',') if self.cc else None,
+            reply_to=self.reply_to.split(',') if self.reply_to else None,
+            
+        )
+        
+        email.content_subtype = self.body_type
+        return email
 
 
 class MassMail(models.Model):
@@ -57,12 +74,21 @@ class MassMail(models.Model):
     distribution_list_to = models.ForeignKey('DistributionList')
 
     def get_mails(self):
-        email_list = []
+        mail_list = []
         for address in self.distribution_list_to.emailaddress_set.all():
             mail = self.mail_template.get_mail_object()
             mail.created_by = self.created_by
             mail.mail_to = address.email
-            email_list.append(mail)
+            
+            mail_list.append(mail)
+        return mail_list
+        
+    def get_emails(self):
+        email_list = []
+        for address in self.distribution_list_to.emailaddress_set.all():
+            email = self.mail_template.get_email_object()
+            email.to = address.email
+            email_list.append(email)
         return email_list
 
 
@@ -89,7 +115,7 @@ class MailTemplate(NamedModel):
 
     subject = models.TextField(help_text='Enter the subject of this template', )
     body = models.TextField(help_text='Enter the body of this template - can be either plain text or html depending on body type')
-    
+
     mail_from = models.EmailField(blank=True, null=True, help_text='Enter a mail from - you may leave it empty to use the default mail from',)
     reply_to = models.EmailField(blank=True, null=True, help_text='Enter an optional reply to email',)
 
@@ -100,14 +126,26 @@ class MailTemplate(NamedModel):
 
     def get_mail_object(self):
         return Mail(
-            mail_template=self, 
+            mail_template=self,
             subject=self.subject[:32],
             body=self.body[:32],
             mail_from=self.mail_from,
             reply_to=self.reply_to,
             body_type=self.body_type,
-            
         )
+        
+    def get_email_object(self):
+        attachments = [(x.name, x.content.read(), x.content_type) for x in self.mailattachment_set.all()]
+        email = EmailMessage(
+            subject=self.subject,
+            body=self.body,
+            from_email=self.mail_from,
+            attachments=attachments,
+            reply_to=self.reply_to,
+        )
+        
+        email.content_subtype = self.body_type
+        return email
 
 
 class MailAttachment(NamedModel):

@@ -2,11 +2,14 @@
     "subject": "Email subject",
     "body": "body body foo bar
     baz taz
-    
-    raz
+    <br />
+    <b>raz</b>
     
     ",
     "mail_from": "from@from.gr",
-    "mail_to": "to@from.gr"
-    
+    "mail_to": "to@from.gr",
+    "reply_to": "reply@repl.gr",
+    "cc": "cc@cc.gr",
+    "bcc": "bcc@cc.gr",
+    "body_type": "html"
 }

@@ -22,6 +22,7 @@ class MailTable(tables.Table):
     class Meta:
         model = Mail
         attrs = {'class': 'table'}
+        order_by = ('-created_on', )
 
 
 class MassMailTable(tables.Table):

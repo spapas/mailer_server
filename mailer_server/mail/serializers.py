@@ -8,7 +8,7 @@ class MailSerializer(serializers.ModelSerializer):
         fields = (
             'id', 'subject', 'body', 'mail_from',
             'mail_to', 'cc', 'bcc', 'body_type',
-            'created_on', 'created_by',
+            'created_on', 'created_by', 'reply_to', 
 
         )
         read_only_fields = ('id', 'created_on', 'created_by',)

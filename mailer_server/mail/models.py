@@ -87,7 +87,7 @@ class MassMail(models.Model):
         email_list = []
         for address in self.distribution_list_to.emailaddress_set.all():
             email = self.mail_template.get_email_object()
-            email.to = address.email
+            email.to = [address.email]
             email_list.append(email)
         return email_list
 

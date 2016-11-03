@@ -1,6 +1,6 @@
 from .base import *
 
-DEBUG = True
+DEBUG = False
 SITE_ID = 2
 
 INSTALLED_APPS += (

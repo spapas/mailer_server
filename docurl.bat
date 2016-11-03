@@ -1,1 +1,1 @@
-curl -v -H "Content-Type: application/json" -H "Authorization: Token 9eaf7d82d6c6d97baba7fa9fb720338429c5f793" -X POST --data @apicall.txt http://127.0.0.1:8000/mail/api/send_mail/
+curl -v -H "Content-Type: application/json" -H "Authorization: Token d06458f72b9d682d4a1c1401e378733265b786de" -X POST --data @apicall.txt http://uat1.hcg.gr:8001/mail/api/send_mail/

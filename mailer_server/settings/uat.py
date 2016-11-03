@@ -17,6 +17,7 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder',
 )
 
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware', )
 
 CSRF_COOKIE_SECURE = False # Override CSRF to work also with http
 SESSION_COOKIE_SECURE = False # Override session to work also with http

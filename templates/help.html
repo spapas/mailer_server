@@ -1,0 +1,40 @@
+{% extends "site_base.html" %}
+{% block head_title %}Help{% endblock %}
+
+{% block page_title %}Help{% endblock %}
+{% block page_content %}
+<div class="row">
+    <div class="col-md-12">
+        <h3>API Usage</h3>
+        <h4>Send single email</h4>
+<pre>curl -v -H "Content-Type: application/json" -H "Authorization: Token CHANGE_WITH_YOUR_TOKEN" 
+    -X POST --data @apicall.txt http://MAILER.SERVER.ADDRESS/mail/api/send_mail/</pre>
+        where, apicall.txt contains the mail data in JSON:
+<pre>
+{
+    "subject": "Email subject",
+    "body": "body body foo bar baz taz",
+    "mail_from": "from@from.gr",
+    "mail_to": "to@from.gr",
+    "reply_to": "reply@repl.gr",
+    "cc": "cc@cc.gr",
+    "bcc": "bcc@cc.gr",
+    "body_type": "plain"
+}</pre>
+
+        <h4>Send mass email</h4>
+<pre>curl -v -H "Content-Type: application/json" -H "Authorization: Token CHANGE_WITH_YOUR_TOKEN" 
+    -X POST --data @massapicall.txt http://MAILER.SERVER.ADDRESS/mail/api/send_mass_mail/</pre>
+where, massapicall.txt contains the mass mail data in JSON:
+<pre>
+{
+    "mail_template": 1,
+    "distribution_list_to": 1
+}
+
+</pre>
+        
+        <a href='{% url "home" %}' class='btn btn-primary' >Return</a>
+    </div>
+</div>
+{% endblock %}

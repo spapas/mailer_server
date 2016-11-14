@@ -9,6 +9,7 @@ from mailer_server.core.views import CreateTokenFormView
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    url(r'^help/$', TemplateView.as_view(template_name='help.html'), name='help'),
     
     url(r'create_token$', CreateTokenFormView.as_view(template_name='create_token.html'), name='create_token'),
     

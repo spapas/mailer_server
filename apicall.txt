@@ -6,10 +6,8 @@
     <b>raz</b>
     
     ",
-    "mail_from": "from@from.gr",
-    "mail_to": "spapas@hcg.gr",
-    "reply_to": "test reply@repl.gr",
-    "cc": "cc@cc.gr",
-    "bcc": "bcc@cc.gr",
+    "mail_from": "TEST TEST <test_test@hcg.gr>",
+    "mail_to": "Serafeim Papastefanos <spapas@hcg.gr>, Serafeim Papastefanos GMAIL <spapas@gmail.com>",
+    "cc": "ΕΥΑΓΓΕΛΟΣ ΑΓΓΕΛΗΣ <aggelis@hcg.gr>",
     "body_type": "html"
 }

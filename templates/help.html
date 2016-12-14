@@ -33,6 +33,22 @@ where, massapicall.txt contains the mass mail data in JSON:
 }
 
 </pre>
+
+
+        <h3>Usage</h3>
+        <h4>Email addresses</h4>
+        An email address can take two forms. Either
+        
+        <ul>
+            <li>name@email.com, or </li> 
+            <li>Full name &lt;name@email.com&gt;</li> 
+        </ul>
+        
+        These two forms can be used anywhere (i.e in the mail_from address, mail_to list of addresses etc) but 
+        please don't use comma (',') to the Full name of the recipient because it is used as a separator between
+        email addresses.
+        
+        
         
         <a href='{% url "home" %}' class='btn btn-primary' >Return</a>
     </div>

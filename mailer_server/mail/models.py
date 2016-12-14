@@ -56,7 +56,7 @@ class Mail(models.Model):
             connection=connection,
             attachments=attachments,
             cc=self.cc.split(',') if self.cc else None,
-            reply_to=self.reply_to.split(',') if self.reply_to else None,
+            reply_to=self.reply_to,
             
         )
         

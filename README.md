@@ -15,6 +15,7 @@ Requirements
 Configuring redis
 -----------------
 If you want to use my configuration (from etc)
+
 1. ``mkdir /home/serafeim/mailer_server/redis/``
 1. use provided ``etc/redis.conf`` for redis configuration
 1. If you want to use supervisord, you can use provided ``etc/mailer-server-redis-supervisord.conf``

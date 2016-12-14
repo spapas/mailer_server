@@ -7,8 +7,8 @@
     
     ",
     "mail_from": "from@from.gr",
-    "mail_to": "to@from.gr",
-    "reply_to": "reply@repl.gr",
+    "mail_to": "spapas@hcg.gr",
+    "reply_to": "test reply@repl.gr",
     "cc": "cc@cc.gr",
     "bcc": "bcc@cc.gr",
     "body_type": "html"

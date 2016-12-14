@@ -30,8 +30,8 @@ class Mail(models.Model):
     subject = models.TextField(blank=True, null=True, )
     body = models.TextField(blank=True, null=True, )
 
-    mail_from = models.EmailField(blank=True, null=True, )
-    reply_to = models.EmailField(blank=True, null=True, )
+    mail_from = models.CharField(max_length=255, blank=True, null=True, )
+    reply_to = models.CharField(max_length=255, blank=True, null=True, )
 
     mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)' )
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )

@@ -19,6 +19,17 @@
 {% endblock %}
 {% block page_content %}
 
+
+<div class='row'>
+    <div class='col-md-12'>
+        <form method='GET' class='form form-inline' >
+            {{ filter.form|crispy }}
+            <button class='btn btn-info' type='submit'>Filter</button>
+            <a href='{{ request.path }}' class='btn btn-info' type='submit'>Clear</a>
+        </form>
+    </div>
+</div>
+
 <div class='row'>
     <div class='col-md-12'>
         {% render_table table %}

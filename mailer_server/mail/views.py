@@ -19,14 +19,15 @@ from rest_framework.response import Response
 
 from dal import autocomplete
 
-from django_tables2 import SingleTableMixin
+from django_tables2 import SingleTableMixin, SingleTableView
 
 from mailer_server.mail import jobs
 from mailer_server.mail.serializers import MailSerializer, MassMailSerializer
 
-from mailer_server.mail import models, forms, tables
+from mailer_server.mail import models, forms, tables, filters
 
 from mailer_server.core.mixins import FilterOwnerMixin
+from mailer_server.mail.mixins import FilteredSingleTableMixin
 
 class UserPermissionRequiredMixin(PermissionRequiredMixin, ):
     permission_required = 'core.user'
@@ -155,11 +156,13 @@ class DownloadDistributionListView(DetailView):
         return response
 
 
-class MailListView(FilterOwnerMixin, SingleTableMixin, ListView):
+class MailListView(FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.Mail
     table_class = tables.MailTable
+    filter_class = filters.MailFilter
 
 
-class MassMailListView(FilterOwnerMixin, SingleTableMixin, ListView):
+class MassMailListView(FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.MassMail
     table_class = tables.MassMailTable
+    filter_class = filters.MassMailFilter

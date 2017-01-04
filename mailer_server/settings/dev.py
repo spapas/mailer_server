@@ -42,11 +42,16 @@ CACHES = {
     }
 }
 
-from .local import *
-from .ldap_conf import *
-    
-logger = logging.getLogger('django_auth_ldap')
-logger.addHandler(logging.StreamHandler())
-logger.setLevel(logging.DEBUG) 
+SECRET_KEY = '111222333overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjmailer_serverdlkdfgdfg'
+
+try:
+    from .local import *
+    from .ldap_conf import *
+        
+    logger = logging.getLogger('django_auth_ldap')
+    logger.addHandler(logging.StreamHandler())
+    logger.setLevel(logging.DEBUG) 
+except:
+    pass
 
 MAGIC_FILE_PATH = 'c:/util/magic_file'

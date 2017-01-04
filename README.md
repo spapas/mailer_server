@@ -60,10 +60,7 @@ stuff on my dev env. However this project *can* be run on windows! Now, as a gen
 directory structure for a django project on windows: Add a ``mailer_server`` parent directory and inside it create
 a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from github) that will contain manage.py etc.
 
-After you have created the above structure:
-
-
-- Install redis for windows from here: https://github.com/MSOpenTech/redis/releases
+- Install redis for windows from here: https://github.com/MSOpenTech/redis/releases and run it - it will listen on default port 6379
 - Activate the virtual environment: Run dovenv.bat from inside ``mailer_server/mailer_server``
 - Run the development server from inside the virtual env through rsp.bat
 - Run the windows rq-worker from inside another virtual env through win_rqworker.bat

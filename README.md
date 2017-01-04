@@ -44,8 +44,6 @@ Log is at /home/serafeim/mailer_server/uwsg.log, pid file at /home/serafeim/mail
 
 To reload(or stop) use: ``uwsgi --reload(stop) /home/serafeim/mailer_server/mailer_server.pid``
 
-
-
 Configuring workers
 -------------------
 
@@ -53,3 +51,20 @@ You need to run at least one django-rq worker. I recommend using supervisord wit
 my configuration from ``etc/mailer-server-rqworker-supervisord.conf``. After the rqworker
 is configured please visit http://site_url:8001/admin/django-rq/ - you must
 have at least 1 worker there.
+
+Running on windows
+------------------
+
+I use windows as my development environment and I usually feel like the child of a lesser god when trying to run
+stuff on my dev env. However this project *can* be run on windows! Now, as a general tip, I propose the following
+directory structure for a django project on windows: Add a ``mailer_server`` parent directory and inside it create
+a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from github) that will contain manage.py etc.
+
+After you have created the above structure:
+
+
+- Install redis for windows from here: https://github.com/MSOpenTech/redis/releases
+- Activate the virtual environment: Run dovenv.bat from inside ``mailer_server/mailer_server``
+- Run the development server from inside the virtual env through rsp.bat
+- Run the windows rq-worker from inside another virtual env through win_rqworker.bat
+- You may now visit http://127.0.0.1:8000

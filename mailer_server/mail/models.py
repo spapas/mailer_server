@@ -141,7 +141,7 @@ class MailTemplate(NamedModel):
             body=self.body,
             from_email=self.mail_from,
             attachments=attachments,
-            reply_to=self.reply_to,
+            reply_to=[self.reply_to],
         )
         
         email.content_subtype = self.body_type

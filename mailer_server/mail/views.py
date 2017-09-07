@@ -2,13 +2,14 @@ import unicodecsv as csv
 
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -141,7 +142,7 @@ class UploadDistributionListView(UserPermissionRequiredMixin, FilterOwnerMixin, 
         return HttpResponseRedirect(self.object.get_absolute_url())
 
 
-class DownloadDistributionListView(DetailView):
+class DownloadDistributionListView(UserPermissionRequiredMixin, DetailView):
     model = models.DistributionList
 
     def render_to_response(self, context, **response_kwargs):
@@ -156,13 +157,13 @@ class DownloadDistributionListView(DetailView):
         return response
 
 
-class MailListView(FilterOwnerMixin, FilteredSingleTableMixin, ListView):
+class MailListView(UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.Mail
     table_class = tables.MailTable
     filter_class = filters.MailFilter
 
 
-class MassMailListView(FilterOwnerMixin, FilteredSingleTableMixin, ListView):
+class MassMailListView(UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.MassMail
     table_class = tables.MassMailTable
     filter_class = filters.MassMailFilter

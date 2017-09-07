@@ -81,7 +81,7 @@ class SendMassMailAPIView(APIView):
         return Response(mm_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class SendMassMailFormView(UserPermissionRequiredMixin, FormView):
+class SendMassMailFormView(LoginRequiredMixin, UserPermissionRequiredMixin, FormView):
     form_class = forms.SendMailForm
     template_name = 'send_mail.html'
 
@@ -104,7 +104,7 @@ class SendMassMailFormView(UserPermissionRequiredMixin, FormView):
         return HttpResponseRedirect(reverse('home'))
 
 
-class DistributionListAutocomplete(UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
+class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated():
             return DistributionList.objects.none()
@@ -117,7 +117,7 @@ class DistributionListAutocomplete(UserPermissionRequiredMixin, autocomplete.Sel
         return qs
 
 
-class MailTemplateAutocomplete(UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
+class MailTemplateAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated():
             return MailTemplate.objects.none()
@@ -130,7 +130,7 @@ class MailTemplateAutocomplete(UserPermissionRequiredMixin, autocomplete.Select2
         return qs
 
 
-class UploadDistributionListView(UserPermissionRequiredMixin, FilterOwnerMixin, UpdateView):
+class UploadDistributionListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerMixin, UpdateView):
     model = models.DistributionList
     form_class = forms.UploadDistributionListForm
     template_name = 'upload_dl.html'
@@ -142,7 +142,7 @@ class UploadDistributionListView(UserPermissionRequiredMixin, FilterOwnerMixin, 
         return HttpResponseRedirect(self.object.get_absolute_url())
 
 
-class DownloadDistributionListView(UserPermissionRequiredMixin, DetailView):
+class DownloadDistributionListView(LoginRequiredMixin, UserPermissionRequiredMixin, DetailView):
     model = models.DistributionList
 
     def render_to_response(self, context, **response_kwargs):
@@ -157,13 +157,13 @@ class DownloadDistributionListView(UserPermissionRequiredMixin, DetailView):
         return response
 
 
-class MailListView(UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
+class MailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.Mail
     table_class = tables.MailTable
     filter_class = filters.MailFilter
 
 
-class MassMailListView(UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
+class MassMailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.MassMail
     table_class = tables.MassMailTable
     filter_class = filters.MassMailFilter

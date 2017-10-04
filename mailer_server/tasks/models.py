@@ -12,4 +12,4 @@ class Task(models.Model):
     result = models.CharField(max_length=128, blank=True, null=True)
 
     def __unicode__(self):
-        return u'{0}, {1}, {2}'.format(self.started_on, self.name, self.job_id)
+        return u'Task: {0}'.format(self.id)

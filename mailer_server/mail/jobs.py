@@ -24,8 +24,10 @@ def send_email_async(email_object, task):
 
     job = get_current_job()
     job_id = job.get_id()
-    
-    email_object.send()
+    try:
+        email_object.send()
+    except:
+        pass
 
     task.job_id = job_id
     task.finished_on = timezone.now()

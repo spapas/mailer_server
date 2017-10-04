@@ -1,3 +1,6 @@
+arrow==0.10.0
+click==6.7
+contextlib2==0.5.5
 Django==1.11.5
 Werkzeug==0.12.2
 django-appconf==1.0.2
@@ -16,6 +19,7 @@ django-rq==0.9.6
 django-tables2==1.11.0
 django-widget-tweaks==1.4.1
 djangorestframework==3.6.4
+python-dateutil==2.6.1
 python-ldap==2.4.44
 python-magic==0.4.13
 redis==2.10.6

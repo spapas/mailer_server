@@ -36,11 +36,12 @@ Steps to deploy
 1. ``echo export DJANGO_SETTINGS_MODULE=mailer_server.settings.prod >> /home/serafeim/mailer_server/venv/bin/activate``
 1. ``source ../venv/bin/activate``
 1. ``python manage.py createsuperuser``
+1. ``cp /home/serafeim/mailer_server/mailer_server/etc/mlrsrv.ini /home/serafeim/mailer_server/mlrsrv.ini
 1. ``sh ./run_uwsgi.sh``
 
-This will run the app through uwsgi as a daemon, listening on port 8001 (which can be changed directly from
-the ``run_uwsgi.sh`` script). 
-Log is at /home/serafeim/mailer_server/uwsg.log, pid file at /home/serafeim/mailer_server/mailer_server.pid.
+This will run the app through uwsgi as a daemon, listening on unix socket /tmp/mlrsrv.ini (which can be changed directly from
+the ``mlrsrv.ini`` uwsgi configuration file). 
+Log is at /home/serafeim/mailer_server/uwsgi_mlrsrv.log, pid file at /home/serafeim/mailer_server/mailer_server.pid.
 
 To reload(or stop) use: ``uwsgi --reload(stop) /home/serafeim/mailer_server/mailer_server.pid``
 

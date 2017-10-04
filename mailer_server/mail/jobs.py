@@ -19,7 +19,7 @@ from mailer_server.mail.models import Mail
 
 
 @job
-def send_email_async(email_object, task_id):
+def send_email_async(email_object, task_id, **test):
     "A job to send email"
 
     job = get_current_job()
@@ -72,7 +72,7 @@ def send_mail(mail):
             name='send_mail',
             started_by=mail.created_by
         )
-        send_email_async.delay(mail.get_email_object(), task.id)
+        send_email_async.delay(mail.get_email_object(), task.id, 5)
     else:
         mail_to = mail.mail_to.split(',')
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)

@@ -182,3 +182,33 @@ REST_FRAMEWORK = {
 }
 
 MAGIC_FILE_PATH = '/etc/magic'
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "rq_console": {
+            "format": "%(asctime)s %(message)s",
+            "datefmt": "%H:%M:%S",
+        },
+    },
+    "handlers": {
+        "rq_console": {
+            "level": "DEBUG",
+            "class": "rq.utils.ColorizingStreamHandler",
+            "formatter": "rq_console",
+            "exclude": ["%(asctime)s"],
+        },
+        # If you use sentry for logging
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.handlers.SentryHandler',
+        },
+    },
+    'loggers': {
+        "rq.worker": {
+            "handlers": ["rq_console", "sentry"],
+            "level": "DEBUG"
+        },
+    }
+}

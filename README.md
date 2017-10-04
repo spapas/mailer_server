@@ -53,11 +53,20 @@ my configuration from ``etc/mailer-server-rqworker-supervisord.conf``. After the
 is configured please visit http://site_url:8001/admin/django-rq/ - you must
 have at least 1 worker there.
 
+Using supervisord
+-----------------
+
+Please find the .conf on mailer_server/etc:
+
+1. mailer-server-redis-supervisord.conf for configuring local redis instance (using a unix socket)
+1. mailer-server-uwsgi-supervisord.conf for running uwsgi through supervisord
+1. mailer-server-rqworker-supervisord.conf for configuring a worker
+
 Running on windows
 ------------------
 
 I use windows as my development environment and I usually feel like the child of a lesser god when trying to run
-stuff on my dev env. However this project *can* be run on windows! Now, as a general tip, I propose the following
+stuff on my dev env. However this project *can* be run on windows (for development only)! Now, as a general tip, I propose the following
 directory structure for a django project on windows: Add a ``mailer_server`` parent directory and inside it create
 a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from github) that will contain manage.py etc.
 

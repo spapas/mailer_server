@@ -183,4 +183,4 @@ REST_FRAMEWORK = {
 
 MAGIC_FILE_PATH = '/etc/magic'
 
-VERSION="0.0.7"
+VERSION="0.0.8"

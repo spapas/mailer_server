@@ -50,7 +50,6 @@ class SendMailAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        print request.data
 
         serializer = MailSerializer(data=request.data, )
         if serializer.is_valid():

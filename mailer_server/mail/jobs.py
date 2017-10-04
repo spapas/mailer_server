@@ -19,7 +19,7 @@ from mailer_server.mail.models import Mail
 
 
 @job
-def send_email_async(email_object, task):
+def send_email_async(email_object, task_id):
     "A job to send email"
 
     job = get_current_job()
@@ -27,6 +27,7 @@ def send_email_async(email_object, task):
     
     email_object.send()
     
+    task = Task.objects.get(id=task_id)
     task.job_id = job_id
     task.finished_on = timezone.now()
     task.result = "OK"
@@ -59,7 +60,7 @@ def send_test_mail(user):
             from_email=email_from,
             to=email_to,
         )
-        send_email_async.delay(email_object, task)
+        send_email_async.delay(email_object, task.id)
 
     else:
         django_send_mail(subject, body, email_from, email_to)
@@ -71,7 +72,7 @@ def send_mail(mail):
             name='send_mail',
             started_by=mail.created_by
         )
-        send_email_async.delay(mail.get_email_object(), task)
+        send_email_async.delay(mail.get_email_object(), task.id)
     else:
         mail_to = mail.mail_to.split(',')
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)

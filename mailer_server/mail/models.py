@@ -38,6 +38,9 @@ class Mail(models.Model):
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
 
+    def __unicode__(self):
+        return u'{0} {1} {2} {3}'.format(self.created_on, created_by, self.id, self.subject)
+
     def get_tuple(self):
         return (
             self.subject,
@@ -45,7 +48,7 @@ class Mail(models.Model):
             self.mail_from,
             self.mail_to.split(','),
         )
-        
+
     def get_email_object(self, connection=None, attachments=None):
         email = EmailMessage(
             subject=self.subject,
@@ -57,9 +60,9 @@ class Mail(models.Model):
             attachments=attachments,
             cc=self.cc.split(',') if self.cc else None,
             reply_to=self.reply_to.split(',') if self.reply_to else None,
-            
+
         )
-        
+
         email.content_subtype = self.body_type
         return email
 
@@ -79,10 +82,10 @@ class MassMail(models.Model):
             mail = self.mail_template.get_mail_object()
             mail.created_by = self.created_by
             mail.mail_to = address.email
-            
+
             mail_list.append(mail)
         return mail_list
-        
+
     def get_emails(self):
         email_list = []
         for address in self.distribution_list_to.emailaddress_set.all():
@@ -133,7 +136,7 @@ class MailTemplate(NamedModel):
             reply_to=self.reply_to,
             body_type=self.body_type,
         )
-        
+
     def get_email_object(self):
         attachments = [(x.name, x.content.read(), x.content_type) for x in self.mailattachment_set.all()]
         email = EmailMessage(
@@ -143,7 +146,7 @@ class MailTemplate(NamedModel):
             attachments=attachments,
             reply_to=[self.reply_to],
         )
-        
+
         email.content_subtype = self.body_type
         return email
 

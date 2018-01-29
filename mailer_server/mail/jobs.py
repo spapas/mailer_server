@@ -24,9 +24,9 @@ def send_email_async(email_object, task_id, ):
 
     job = get_current_job()
     job_id = job.get_id()
-    
+
     email_object.send()
-    
+
     task = Task.objects.get(id=task_id)
     task.job_id = job_id
     task.finished_on = timezone.now()
@@ -70,7 +70,8 @@ def send_mail(mail):
     if can_do_async():
         task = Task.objects.create(
             name='send_mail',
-            started_by=mail.created_by
+            started_by=mail.created_by,
+            result='NOT STARTED',
         )
         send_email_async.delay(mail.get_email_object(), task.id, )
     else:
@@ -82,13 +83,14 @@ def send_mail(mail):
 def send_mass_mail_async(mm_serializer, user):
     task = Task.objects.create(
         name='send_mass_mail',
-        started_by=user
+        started_by=user,
+        result='NOT STARTED',
     )
 
     mass_mail = mm_serializer.save(created_by=user)
     mail_list = mass_mail.get_mails()
     email_list = mass_mail.get_emails()
-    
+
     Mail.objects.bulk_create(mail_list)
     connection = get_connection()
     connection.send_messages(email_list)

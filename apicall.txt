@@ -8,6 +8,5 @@
     ",
     "mail_from": "TEST TEST <test_test@hcg.gr>",
     "mail_to": "Serafeim Papastefanos <spapas@hcg.gr>, Serafeim Papastefanos GMAIL <spapas@gmail.com>",
-    "cc": "ΕΥΑΓΓΕΛΟΣ ΑΓΓΕΛΗΣ <aggelis@hcg.gr>",
     "body_type": "html"
 }

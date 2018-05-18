@@ -1,12 +1,28 @@
 version: '3'
 services:
   web:
-    build: .
+    image: spapas/mlrsrv
     ports:
       - "8000:8000"
     volumes:
       - .:/src
     command:
         python /src/manage.py runserver 0.0.0.0:8000
+  rqworker:
+    image: spapas/mlrsrv
+    volumes:
+      - .:/src
+    command:
+      python /src/manage.py rqworker
   redis:
     image: redis
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 123
+    volumes:
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        - ../pgdata:/var/lib/postgresql/data
+    ports:
+        -  "5432:5432"

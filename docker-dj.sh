@@ -1,1 +1,1 @@
-docker run -it --rm -v /home/serafeim/docker/mailer_server/:/src/ mlrsrv python /src/manage.py $*
+docker exec -it mailerserver_web_1 python /src/manage.py $*

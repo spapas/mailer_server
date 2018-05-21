@@ -15,9 +15,9 @@ services:
     command:
       python /src/manage.py rqworker
   redis:
-    image: redis
+    image: redis:alpine
   db:
-    image: postgres
+    image: postgres:alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: 123

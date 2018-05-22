@@ -10,13 +10,15 @@ services:
       - "redis"
       - "db"
     command:
-        python /src/manage.py runserver 0.0.0.0:8000
+        # python /src/manage.py runserver 0.0.0.0:8000
+        ["sh", "/src/wait-for", "db:5432", "--", "python", "/src/manage.py", "runserver", "0.0.0.0:8000"]
   rqworker:
     image: spapas/mlrsrv
     volumes:
       - .:/src
     command:
-      python /src/manage.py rqworker
+        # python /src/manage.py rqworker
+        ["sh", "/src/wait-for", "db:5432", "--", "python", "/src/manage.py", "rqworker"]
     depends_on:
       - "redis"
       - "db"

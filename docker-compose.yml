@@ -6,6 +6,9 @@ services:
       - "8000:8000"
     volumes:
       - .:/src
+    depends_on:
+      - "redis"
+      - "db"
     command:
         python /src/manage.py runserver 0.0.0.0:8000
   rqworker:
@@ -14,6 +17,9 @@ services:
       - .:/src
     command:
       python /src/manage.py rqworker
+    depends_on:
+      - "redis"
+      - "db"
   redis:
     image: redis:alpine
   db:

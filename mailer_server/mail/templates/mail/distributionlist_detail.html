@@ -10,6 +10,11 @@
         <h3>{{ object.name }}</h3>
     </div>
 </div>
+<div class='row my-5'>
+    <div class='col-md-12'>
+      <b>Number of emails: {{ object.emailaddress_set.all|length }}</b>
+    </div>
+</div>
 
 <div class='row'>
 {% for ea in object.emailaddress_set.all %}

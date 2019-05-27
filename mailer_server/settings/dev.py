@@ -21,7 +21,7 @@ TEMPLATES[0]['OPTIONS']['loaders'] = (
 TEMPLATES[0]['OPTIONS']['debug'] = True
 
 AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
+#     'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
@@ -47,10 +47,10 @@ SECRET_KEY = '111222333overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjma
 try:
     from .local import *
     from .ldap_conf import *
-        
+
     logger = logging.getLogger('django_auth_ldap')
     logger.addHandler(logging.StreamHandler())
-    logger.setLevel(logging.DEBUG) 
+    logger.setLevel(logging.DEBUG)
 except:
     pass
 

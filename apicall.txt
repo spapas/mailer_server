@@ -6,7 +6,7 @@
     <b>raz</b>
     
     ",
-    "mail_from": "TEST TEST <test_test@hcg.gr>",
+    "mail_from": "TEST TEST <noreply@hcg.gr>",
     "mail_to": "Serafeim Papastefanos <spapas@hcg.gr>, Serafeim Papastefanos GMAIL <spapas@gmail.com>",
     "body_type": "html"
 }

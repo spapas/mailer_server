@@ -21,7 +21,11 @@
         
         border-radius: .25rem;
     }
+
+
 </style>
+
+<link href="{% static 'summernote-bs4.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block head_title %}Update mail template{% endblock %}
@@ -38,6 +42,11 @@
         </div>
     </div>
     <div class='row'>
+        <div class='col-md-12'>
+            {{ form.body_type|as_crispy_field }}
+        </div>
+    </div>
+    <div class='row'>
         <div class='col-md-6'>
             {{ form.subject|as_crispy_field }}
         </div>
@@ -45,11 +54,7 @@
             {{ form.body|as_crispy_field }}
         </div>
     </div>
-    <div class='row'>
-        <div class='col-md-12'>
-            {{ form.body_type|as_crispy_field }}
-        </div>
-    </div>
+    
     <div class='row'>
         <div class='col-md-6'>
             {{ form.mail_from|as_crispy_field }}
@@ -98,10 +103,32 @@
 
 {% block extra_script_no_compress %}
     <script src="{% static 'jquery.formset.min.js' %}"></script>
+    <script src="{% static 'summernote-bs4.min.js' %}"></script>
     <script>
     
     var addedRow = function(row) {
         console.log(row);
+    }
+
+    var change_body_type = function() {
+        var val = $('#id_body_type').val();
+            if(val=='html') {
+                $("#id_body").summernote({
+                    height: 150,
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        //['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        //['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        // ['height', ['height']]
+                    ]
+                })
+            } else {
+                //$('#id_body').summernote();
+                $('#id_body').summernote('destroy');
+            }
     }
     
     $(function() {
@@ -110,7 +137,18 @@
             addCssClass: 'btn btn-info'
             
         });
+
+        {% if form.instance.id %}
+        change_body_type();
+        {% endif %}
+
+        $('#id_body_type').change(function() {
+            change_body_type();
+        });
+
     })
+
+    
     
     </script>
 {% endblock %}

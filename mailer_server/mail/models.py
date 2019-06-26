@@ -54,7 +54,7 @@ class Mail(models.Model):
             subject=self.subject,
             body=self.body,
             from_email=self.mail_from,
-            to=self.mail_to.split(',')  if self.to else None,
+            to=self.mail_to.split(',')  if self.mail_to else None,
             bcc=self.bcc.split(',') if self.bcc else None,
             connection=connection,
             attachments=attachments,

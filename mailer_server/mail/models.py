@@ -33,7 +33,7 @@ class Mail(models.Model):
     mail_from = models.CharField(max_length=255, blank=True, null=True, )
     reply_to = models.CharField(max_length=255, blank=True, null=True, )
 
-    mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)' )
+    mail_to = models.TextField(help_text='Enter a list of receipients separated with commas (,)', blank=True, null=True,)
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )

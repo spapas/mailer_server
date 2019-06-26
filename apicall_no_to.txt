@@ -1,0 +1,13 @@
+{
+    "subject": "Email subject",
+    "body": "body body foo bar
+    baz taz
+    <br />
+    <b>raz</b>
+    
+    ",
+    "mail_from": "TEST TEST <noreply@hcg.gr>",
+    "cc": "Serafeim Papastefanos <spapas@hcg.gr>",
+    "bcc": "Serafeim Papastefanos GMAIL <spapas@gmail.com>",
+    "body_type": "html"
+}

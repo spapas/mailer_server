@@ -53,8 +53,6 @@ class SendMailConfirmForm(forms.Form):
         queryset=models.MailTemplate.objects.all(),
         widget=forms.HiddenInput()
     )
-
-
    
     
 class UploadDistributionListForm(forms.ModelForm):

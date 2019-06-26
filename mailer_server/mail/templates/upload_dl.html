@@ -13,24 +13,33 @@
 <div class='row'>
     <div class='col-md-12'>
         <div class='alert alert-info'>
-            You may select a CSV file containing columns of the form name; email that will be used to
+            <p>You may select a CSV file containing columns of the form name; email that will be used to
             update the emails of this distribution list. The first row of the CSV should be a header
             row and will not be taken into account.
+        </p>
+        <hr />
             
             <h4>Characteristics of csv</h4>
-            <ul>
-                <li>Encoding: UTF-8</li>
-                <li>Field delimiter: comma (,)</li>
-                <li>Quote delimiter: quote (")</li>
-            </ul>
+            <div class='row'>
+                <div class='col-md-6'>
+                    <ul>
+                        <li>Encoding: UTF-8</li>
+                        <li>Field delimiter: comma (,)</li>
+                        <li>Quote delimiter: quote (")</li>
+                    </ul>
+                </div>
+                <div class='col-md-6'>
+                    <a class='btn btn-success' href='{% static "sample.csv" %}'>Download sample CSV</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <div class='row'>
     <div class='col-md-12'>
-        <div class='alert alert-info'>
-            Warining: All existing emails of this list will be deleted!
+        <div class='alert alert-danger'>
+            Warining: All existing emails of this list will be deleted when this email will be published!
         </div>
     </div>
 </div>

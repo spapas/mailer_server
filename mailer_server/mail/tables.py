@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from django_tables2.columns import LinkColumn
+from django_tables2.columns import LinkColumn, TemplateColumn
 from django_tables2.utils import A
 from mailer_server.mail.models import Mail, MassMail, DistributionList, MailTemplate
 
@@ -13,6 +13,8 @@ class DistributionListTable(tables.Table):
 
 class MailTemplateTable(tables.Table):
     id = LinkColumn('mt_mail_mailtemplate_detail', args=[A('pk')])
+    body = TemplateColumn("""{% if record.body_type == 'html' %}{{ record.body|safe }}{% else %}{{ record.body }}{% endif %}""", orderable=False,)
+
     class Meta:
         model = MailTemplate
         attrs = {'class': 'table'}
@@ -20,7 +22,7 @@ class MailTemplateTable(tables.Table):
 
 class MailTable(tables.Table):
     mail_template = LinkColumn('mt_mail_mailtemplate_detail', args=[A('mail_template_id')])
-    
+        
     class Meta:
         model = Mail
         attrs = {'class': 'table'}

@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import FormView, UpdateView
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 
@@ -82,13 +82,42 @@ class SendMassMailAPIView(APIView):
 
 class SendMassMailFormView(LoginRequiredMixin, UserPermissionRequiredMixin, FormView):
     form_class = forms.SendMailForm
-    template_name = 'send_mail.html'
+    template_name = 'send_mass_mail.html'
+
+
+class SendMassMailConfirmFormView(LoginRequiredMixin, UserPermissionRequiredMixin, FormView):
+    form_class = forms.SendMailConfirmForm
+    template_name = 'send_mass_mail_confirm.html'
+
+    def get_form(self, ):
+        if self.request.method == 'GET':
+            mt_id = self.request.GET.get('mail_template')
+            dl_id = self.request.GET.get('distribution_list')
+
+            self.mt = get_object_or_404(models.MailTemplate, pk=mt_id)
+            self.dl = get_object_or_404(models.DistributionList, pk=dl_id)
+
+        return super(SendMassMailConfirmFormView, self).get_form()
+
+    def get_initial(self, ):
+        gi = super(SendMassMailConfirmFormView, self).get_initial()
+        if self.request.method == 'GET':
+            gi['distribution_list'] = self.mt
+            gi['mail_template'] = self.dl
+        return gi
+
+    def get_context_data(self):
+        ctx = super(SendMassMailConfirmFormView, self).get_context_data()
+
+        ctx['mt'] = self.mt
+        ctx['dl'] = self.dl
+
+        return ctx 
 
     def form_valid(self, form):
         # Stupid DRF! I have to use a serializer here that is filled from the form to keep a common API
         # with the jobs. Notice that I don't care about the validity of the serializer since it shoud
         # have been validated from the form -- I just use is_valid to allow saving in the job
-
         mm_serializer  = MassMailSerializer(data={
             'mail_template': form.cleaned_data['mail_template'].id,
             'distribution_list_to': form.cleaned_data['distribution_list'].id,
@@ -100,7 +129,7 @@ class SendMassMailFormView(LoginRequiredMixin, UserPermissionRequiredMixin, Form
         else:
             messages.info(self.request, 'Not able to send any emails!')
 
-        return HttpResponseRedirect(reverse('home'))
+        return HttpResponseRedirect(reverse('home'))        
 
 
 class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):

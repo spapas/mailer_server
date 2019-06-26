@@ -9,7 +9,7 @@ from django.views.generic import TemplateView
 from mailer_server.mail.views import (
     send_test_email, SendMailAPIView, DistributionListAutocomplete, 
     MailTemplateAutocomplete, SendMassMailFormView, SendMassMailAPIView, UploadDistributionListView,
-    DownloadDistributionListView, MailListView, MassMailListView
+    DownloadDistributionListView, MailListView, MassMailListView, SendMassMailConfirmFormView
 )
 from mailer_server.mail.scaffolding import DistributionListCrudManager, MailTemplateCrudManager
 
@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^api/send_mass_mail/$', SendMassMailAPIView.as_view(), name='api_send_mass_mail', ),   
     
     url(r'send_mass_mail$', SendMassMailFormView.as_view(), name='send_mass_mail'),
+    url(r'send_mass_mail_confirm$', SendMassMailConfirmFormView.as_view(), name='send_mass_mail_confirm'),
     
     url(r'^dlupload/(?P<pk>\d+)/$', UploadDistributionListView.as_view(), name='dl_upload'),
     url(r'^dldownload/(?P<pk>\d+)/$', DownloadDistributionListView.as_view(), name='dl_download'),

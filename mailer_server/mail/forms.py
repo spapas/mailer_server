@@ -32,7 +32,6 @@ class MailTemplateForm(forms.ModelForm):
 
         
 class SendMailForm(forms.Form):
-
     distribution_list = forms.ModelChoiceField(
         queryset=models.DistributionList.objects.all(),
         widget=autocomplete.ModelSelect2(url='distributionlist-autocomplete')
@@ -42,7 +41,21 @@ class SendMailForm(forms.Form):
         queryset=models.MailTemplate.objects.all(),
         widget=autocomplete.ModelSelect2(url='mailtemplate-autocomplete')
     )
+
+
+class SendMailConfirmForm(forms.Form):
+    distribution_list = forms.ModelChoiceField(
+        queryset=models.DistributionList.objects.all(),
+        widget=forms.HiddenInput()
+    )
     
+    mail_template = forms.ModelChoiceField(
+        queryset=models.MailTemplate.objects.all(),
+        widget=forms.HiddenInput()
+    )
+
+
+   
     
 class UploadDistributionListForm(forms.ModelForm):
     file = forms.FileField(label='CSV file', help_text='Please upload a CSV file with the emails of the distribution list')

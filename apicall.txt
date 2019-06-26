@@ -7,6 +7,6 @@
     
     ",
     "mail_from": "TEST TEST <noreply@hcg.gr>",
-    "mail_to": "Serafeim Papastefanos <spapas@hcg.gr>, Serafeim Papastefanos GMAIL <spapas@gmail.com>",
+    "mail_to": "Serafeim <zzz@zzz.gr>, Serafeim GMAIL <zzz@example.com>",
     "body_type": "html"
 }

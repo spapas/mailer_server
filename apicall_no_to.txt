@@ -7,7 +7,7 @@
     
     ",
     "mail_from": "TEST TEST <noreply@hcg.gr>",
-    "cc": "Serafeim Papastefanos <spapas@hcg.gr>",
-    "bcc": "Serafeim Papastefanos GMAIL <spapas@gmail.com>",
+    "cc": "Serafeim <spapas@zzzz.gr>",
+    "bcc": "Serafeim GMAIL <spapas@zzz.com>",
     "body_type": "html"
 }

@@ -72,6 +72,7 @@ a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from
 
 - Install redis for windows from here: https://github.com/MSOpenTech/redis/releases and run it - it will listen on default port 6379
 - Activate the virtual environment: Run dovenv.bat from inside ``mailer_server/mailer_server``
+- Install this package https://github.com/michaelbrooks/rq-win/blob/master/rq_win/worker.py using `pip install git+https://github.com/michaelbrooks/rq-win.git#egg=rq-win`
 - Run the development server from inside the virtual env through rsp.bat
 - Run the windows rq-worker from inside another virtual env through win_rqworker.bat
-- You may now visit http://127.0.0.1:8000
+- You may now visit http://127.0.0.1:8000 and try adding jobs

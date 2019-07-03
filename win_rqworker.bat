@@ -1,1 +1,1 @@
-python manage.py rqworker --worker-class mailer_server.core.simpleworker.SimpleWorker 
+python manage.py rqworker --worker-class rq_win.WindowsWorker 

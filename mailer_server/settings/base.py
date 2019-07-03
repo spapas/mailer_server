@@ -171,7 +171,6 @@ CONSTANCE_REDIS_CONNECTION_CLASS = 'django_redis.get_redis_connection'
 CONSTANCE_DATABASE_CACHE_BACKEND = 'default'
 
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

@@ -127,7 +127,7 @@ class SendMassMailConfirmFormView(LoginRequiredMixin, UserPermissionRequiredMixi
 
             messages.info(self.request, 'Started sending emails!')
         else:
-            messages.info(self.request, 'Not able to send any emails!')
+            messages.info(self.request, 'Not able to send any emails (no workers found)!')
 
         return HttpResponseRedirect(reverse('home'))        
 

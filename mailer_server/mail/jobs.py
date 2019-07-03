@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail as django_send_mail
 from django.core.mail import send_mass_mail as django_send_mass_mail
-from django.db import connections
+from django.db import connections, transaction
 from django_rq import job
 from django.utils import timezone
 from rq import get_current_job, Queue, Worker
@@ -17,10 +17,16 @@ import django_rq
 from mailer_server.tasks.models import Task
 from mailer_server.mail.models import Mail
 
+import logging
+logger = logging.getLogger(__name__)
+
 
 @job
 def send_email_async(email_object, task_id, ):
     "A job to send email"
+
+    logger.error('Something went wrong!')
+    logger.info('Something went right!')
 
     job = get_current_job()
     job_id = job.get_id()
@@ -45,10 +51,12 @@ email_from = 'noreply@hcg.gr'
 
 
 def send_test_mail(user):
+    print("ZZZ")
     email_to = settings.ADMINS
     body = "TEST email from {0}".format(user)
     subject = "TEST EMAIL"
     if can_do_async():
+        print("CAN")
         task = Task.objects.create(
             name='send_test_mail',
             started_by=user,
@@ -60,7 +68,8 @@ def send_test_mail(user):
             from_email=email_from,
             to=email_to,
         )
-        send_email_async.delay(email_object, task.id)
+        #send_email_async.delay(email_object, task.id)
+        transaction.on_commit(lambda: send_email_async.delay(email_object, task.id, ))
 
     else:
         django_send_mail(subject, body, email_from, email_to)
@@ -73,7 +82,8 @@ def send_mail(mail):
             started_by=mail.created_by,
             result='NOT STARTED',
         )
-        send_email_async.delay(mail.get_email_object(), task.id, )
+        transaction.on_commit(lambda: send_email_async.delay(mail.get_email_object(), task.id, ))
+        
     else:
         mail_to = mail.mail_to.split(',')
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)
@@ -99,7 +109,7 @@ def send_mass_mail_async(mm_serializer, user):
 
 def send_mass_mail(mass_mail, user):
     if can_do_async():
-        send_mass_mail_async.delay(mass_mail, user)
+        transaction.on_commit(lambda: send_mass_mail_async.delay(mass_mail, user))
 
         return True
     else:

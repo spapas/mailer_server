@@ -80,6 +80,12 @@
                     
                     <a class='btn btn-primary' href='{% url "mail_list" %}'>Mail list</a>
                     <a class='btn btn-primary' href='{% url "mass_mail_list" %}'>Mass mail list</a>
+                    
+                    {% if perms.core.admin %}
+                        <hr />
+                        <a class='btn btn-danger' href='{% url "send_test_email" %}'>Send test mail</a>
+                    {% endif %}
+                    
                 {% endif %}
                 
             {% else %}

@@ -40,6 +40,9 @@
     </div>
 </div>
 
+<div class='alert alert-warning'>
+    Are you sure that you really want to send this mail to <b>{{ dl.emailaddress_set.all|length }}</b> emails?
+</div>
 
 <form method="POST" action='{% url "send_mass_mail_confirm" %}' >
     {% csrf_token %}

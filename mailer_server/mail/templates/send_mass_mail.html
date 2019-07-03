@@ -9,10 +9,13 @@
 {% block page_title %}Send mass mail{% endblock %}
 {% block page_content %}
 
+<div class='alert alert-info'>
+    Please select a distribution list and a mail template to proceed with the mass mail sending
+</div>
 <form method="GET" action='{% url "send_mass_mail_confirm" %}' >
     {{ form|crispy }}
     
-    <input type="submit" class="btn btn-primary" value='Send' />
+    <input type="submit" class="btn btn-primary" value='Continue' />
     <a href='{% url "home" %}' class="btn btn-info">Return</a>
 
 </form>

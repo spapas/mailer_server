@@ -21,12 +21,12 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+
 @job
 def send_email_async(email_object, task_id, ):
     "A job to send email"
 
-    logger.error('Something went wrong!')
-    logger.info('Something went right!')
+    logger.info('Sending a new mail async!')
 
     job = get_current_job()
     job_id = job.get_id()
@@ -51,12 +51,13 @@ email_from = 'noreply@hcg.gr'
 
 
 def send_test_mail(user):
-    print("ZZZ")
+    logger.error('Something went wrong!')
+    logger.info('Something went right!')
     email_to = settings.ADMINS
     body = "TEST email from {0}".format(user)
     subject = "TEST EMAIL"
     if can_do_async():
-        print("CAN")
+        logger.info('Async test mail send!')
         task = Task.objects.create(
             name='send_test_mail',
             started_by=user,
@@ -72,19 +73,21 @@ def send_test_mail(user):
         transaction.on_commit(lambda: send_email_async.delay(email_object, task.id, ))
 
     else:
+        logger.info('Will send the mail synchronously!')
         django_send_mail(subject, body, email_from, email_to)
 
 
 def send_mail(mail):
     if can_do_async():
+        logger.info('Async mail send!')
         task = Task.objects.create(
             name='send_mail',
             started_by=mail.created_by,
             result='NOT STARTED',
         )
         transaction.on_commit(lambda: send_email_async.delay(mail.get_email_object(), task.id, ))
-        
     else:
+        logger.info('Will send the mail synchronously!')
         mail_to = mail.mail_to.split(',')
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)
 
@@ -97,6 +100,7 @@ def send_mass_mail_async(mm_serializer, user):
         result='NOT STARTED',
     )
 
+    logger.info('Sending mass mails!')
     mass_mail = mm_serializer.save(created_by=user)
     mail_list = mass_mail.get_mails()
     email_list = mass_mail.get_emails()
@@ -109,8 +113,10 @@ def send_mass_mail_async(mm_serializer, user):
 
 def send_mass_mail(mass_mail, user):
     if can_do_async():
+        logger.info('Will send the mass mails!')
         transaction.on_commit(lambda: send_mass_mail_async.delay(mass_mail, user))
 
         return True
     else:
+        logger.error('Cannot do async, will not send mails!')
         return False

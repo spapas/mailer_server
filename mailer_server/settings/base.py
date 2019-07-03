@@ -183,3 +183,34 @@ REST_FRAMEWORK = {
 MAGIC_FILE_PATH = '/etc/magic'
 
 VERSION="0.1.0"
+
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "rq_console": {
+            "format": "%(asctime)s %(message)s",
+            "datefmt": "%H:%M:%S",
+        },
+    },
+    "handlers": {
+        "rq_console": {
+            "level": "DEBUG",
+            "class": "rq.utils.ColorizingStreamHandler",
+            "formatter": "rq_console",
+            "exclude": ["%(asctime)s"],
+        }
+    },
+    'loggers': {
+        "rq.worker": {
+            "handlers": ["rq_console"],
+            "level": "DEBUG"
+        },
+        "mailer_server.mail.jobs": {
+            "handlers": ["rq_console"],
+            "level": "DEBUG"
+        },
+
+    }
+}

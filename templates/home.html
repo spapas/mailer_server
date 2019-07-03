@@ -84,6 +84,7 @@
                     {% if perms.core.admin %}
                         <hr />
                         <a class='btn btn-danger' href='{% url "send_test_email" %}'>Send test mail</a>
+                        <a class='btn btn-warning' href='{% url "rq_home" %}'>Rq home</a>
                     {% endif %}
                     
                 {% endif %}

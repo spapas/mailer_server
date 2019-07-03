@@ -149,7 +149,7 @@ SESSION_COOKIE_SECURE = True # Careful this allows session to work only on HTTPS
 CSRF_COOKIE_SECURE = True # Careful this allows CSRF to work only on HTTPS on production
 CSRF_COOKIE_HTTPONLY = True
 
-ADMINS = MANAGERS = [('Serafeim Papastefanos', 'spapas@gmail.com'), ]
+ADMINS = MANAGERS = [('Serafeim Papastefanos', 'spapas@foo.bar'), ]
 
 # Default for django-filter
 FILTERS_HELP_TEXT_EXCLUDE = True

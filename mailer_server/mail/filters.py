@@ -12,6 +12,7 @@ class MailFilter(django_filters.FilterSet):
             'subject': ['icontains'], 
             'body': ['icontains'], 
             'created_by__username': ['icontains'], 
+            'mail_template__name': ['icontains'],
         }
         
         

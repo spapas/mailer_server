@@ -73,13 +73,17 @@
                 {% endif %}
                 <hr />
                 {% if perms.core.admin or perms.core.user %}
-                    <a class='btn btn-primary' href='{% url "create_token" %}'>Create access token</a>
-                    <a class='btn btn-primary' href='{% url "dl_mail_distributionlist_list" %}'>My distribution lists</a>
-                    <a class='btn btn-primary' href='{% url "mt_mail_mailtemplate_list" %}'>My mail templates</a>
-                    <a class='btn btn-primary' href='{% url "send_mass_mail" %}'>Send mass mail</a>
+                    <a class='btn btn-danger' href='{% url "create_token" %}'>Create access token</a>
+                    <hr />
+                    <a class='btn btn-info' href='{% url "dl_mail_distributionlist_list" %}'>My distribution lists</a>
+                    <a class='btn btn-info' href='{% url "mt_mail_mailtemplate_list" %}'>My mail templates</a>
+                    <hr />
+                    <a class='btn btn-primary' href='{% url "send_mail" %}'>Send mail</a>
+                    <a class='btn btn-warning' href='{% url "send_mass_mail" %}'>Send mass mail</a>
+                    <hr />
+                    <a class='btn btn-info' href='{% url "mail_list" %}'>Mail list</a>
+                    <a class='btn btn-info' href='{% url "mass_mail_list" %}'>Mass mail list</a>
                     
-                    <a class='btn btn-primary' href='{% url "mail_list" %}'>Mail list</a>
-                    <a class='btn btn-primary' href='{% url "mass_mail_list" %}'>Mass mail list</a>
                     
                     {% if perms.core.admin %}
                         <hr />

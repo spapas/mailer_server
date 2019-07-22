@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, CreateView
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -195,3 +195,22 @@ class MassMailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOw
     model = models.MassMail
     table_class = tables.MassMailTable
     filter_class = filters.MassMailFilter
+
+
+class SendMailCreateView(LoginRequiredMixin, UserPermissionRequiredMixin, CreateView):
+    model = models.Mail
+    form_class = forms.MailForm
+
+    def get_initial(self):
+        return {
+            # 'body_type': 'html'
+        }
+
+    def form_valid(self, form):
+        serializer = MailSerializer(data=form.cleaned_data, )    
+        serializer.is_valid()
+        mail = serializer.save(created_by=self.request.user)
+        messages.info(self.request, 'Will send email ...')
+        jobs.send_mail(mail)
+        return HttpResponseRedirect(reverse('home'))        
+        

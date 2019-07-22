@@ -63,7 +63,8 @@ class UploadDistributionListForm(forms.ModelForm):
         model = models.DistributionList
    
     def clean(self):
-        fin = self.cleaned_data['file']
+        data = super(UploadDistributionListForm, self).clean()
+        fin = data['file']
         if fin.name[-3:].lower() != 'csv':
             raise forms.ValidationError("Please use a CSV file!")
         reader = csv.reader(fin, encoding='utf-8', delimiter=',', quotechar='"')
@@ -78,3 +79,33 @@ class UploadDistributionListForm(forms.ModelForm):
                 distribution_list=self.instance,
             ))
             
+
+class MailForm(forms.ModelForm):
+    mail_to = forms.CharField(help_text='Enter a list of cc separated with commas (,)', required=False,)
+    cc = forms.CharField(help_text='Enter a list of cc separated with commas (,)', required=False,)
+    bcc = forms.CharField(help_text='Enter a list of cc separated with commas (,)', required=False,)
+
+    class Meta:
+        fields = ('subject', 'body_type', 'body', 'mail_from' ,'reply_to', 'mail_to', 'cc', 'bcc', )
+        model = models.Mail
+
+    def __init__(self, *args, **kwargs):
+        super(MailForm, self).__init__(*args, **kwargs)
+        self.fields['subject'].required = True
+        self.fields['body'].required = True
+
+    def clean(self):
+        data = super(MailForm, self).clean()
+
+        tot_addrs = 0 
+        #tot_addrs += len(data.get('mail_to', '').split(','))
+        #tot_addrs += len(data.get('cc', '').split(','))
+        #tot_addrs += len(data.get('bcc', '').split(','))
+        #a+=1
+        if not data.get('mail_to') and not data.get('cc') and not data.get('bcc'):
+            msg = "Please enter at least one email address!"
+            self._errors['mail_to'] = self.error_class([msg])
+            self._errors['cc'] = self.error_class([msg])
+            self._errors['bcc'] = self.error_class([msg])
+            
+        return data

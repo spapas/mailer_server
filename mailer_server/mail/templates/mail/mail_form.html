@@ -1,0 +1,131 @@
+﻿{% extends "site_base.html" %}
+{% load static crispy_forms_tags crispy_forms_filters %}
+{% load widget_tweaks %}
+{% block extra_style %}
+<style>
+    .delete-row {
+        color: #fff;
+        background-color: #31b0d5;
+        border-color: #269abc;
+        display: inline;
+        margin: auto;
+        font-weight: 400;
+        line-height: 1.25;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        cursor: pointer;
+        
+        border: 1px solid transparent;
+        padding: .5rem 1rem;
+        
+        border-radius: .25rem;
+    }
+
+
+</style>
+
+<link href="{% static 'summernote-bs4.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block head_title %}Update mail template{% endblock %}
+{% block page_title %}Update mail template{% endblock %}
+{% block page_content %}
+
+<form method="POST" action='' enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class='row'>
+        <div class='col-md-12'>
+            {{ form.body_type|as_crispy_field }}
+        </div>
+    </div>
+    <div class='row'>
+        <div class='col-md-6'>
+            {{ form.subject|as_crispy_field }}
+        </div>
+        <div class='col-md-6'>
+            {{ form.body|as_crispy_field }}
+        </div>
+    </div>
+    
+    <div class='row'>
+        <div class='col-md-6'>
+            {{ form.mail_from|as_crispy_field }}
+        </div>
+        <div class='col-md-6'>
+            {{ form.reply_to|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-md-12'>
+            {{ form.mail_to|as_crispy_field }}
+        </div>
+    </div>
+
+    <div class='row'>
+        <div class='col-md-6'>
+            {{ form.cc|as_crispy_field }}
+        </div>
+        <div class='col-md-6'>
+            {{ form.bcc|as_crispy_field }}
+        </div>
+    </div>
+    
+    
+    <input type="submit" class="btn btn-primary" value='Send' />
+    <a href='{% url "mt_mail_mailtemplate_list" %}' class="btn btn-info">Return</a>
+
+</form>
+
+
+{% endblock %}
+
+{% block extra_script_no_compress %}
+    <script src="{% static 'jquery.formset.min.js' %}"></script>
+    <script src="{% static 'summernote-bs4.min.js' %}"></script>
+    <script>
+    
+    var addedRow = function(row) {
+        console.log(row);
+    }
+
+    var change_body_type = function() {
+        var val = $('#id_body_type').val();
+            if(val=='html') {
+                $("#id_body").summernote({
+                    height: 150,
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['style', ['bold', 'italic', 'underline', 'clear']],
+                        //['font', ['strikethrough', 'superscript', 'subscript']],
+                        ['fontsize', ['fontsize']],
+                        //['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        // ['height', ['height']]
+                    ]
+                })
+            } else {
+                //$('#id_body').summernote();
+                $('#id_body').summernote('destroy');
+            }
+    }
+    
+    $(function() {
+        {% if form.instance.id %}
+        change_body_type();
+        {% endif %}
+        
+        
+
+        $('#id_body_type').change(function() {
+            change_body_type();
+        });
+
+    })
+
+    
+    
+    </script>
+{% endblock %}

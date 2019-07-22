@@ -34,8 +34,7 @@
 
 <form method="POST" action='' enctype="multipart/form-data">
     {% csrf_token %}
-    
-    
+
     <div class='row'>
         <div class='col-md-12'>
             {{ form.name|as_crispy_field }}

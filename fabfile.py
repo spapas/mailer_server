@@ -2,6 +2,12 @@ from __future__ import with_statement
 from fabric.api import *
 import os
 
+
+def check_migrations():
+    "Do migrations check"
+    print "Checking migrations"
+    local('python manage.py makemigrations --dry-run --check')
+
 def pep8():
     "Do pep8 styule checks"
     print "Check with pep8"
@@ -42,6 +48,7 @@ def touch_wsgi():
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"
     pep8()
+    check_migrations()
     commit()
     pull()
     work()

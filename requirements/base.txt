@@ -1,8 +1,8 @@
 arrow==0.10.0
 click==6.7
 contextlib2==0.5.5
-Django==1.11.22
-Werkzeug==0.12.2
+Django==1.11.23
+Werkzeug==0.15.5
 django-appconf==1.0.2
 django-auth-ldap==1.2.16
 django-autocomplete-light==3.2.10

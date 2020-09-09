@@ -3,7 +3,7 @@ click==6.7
 contextlib2==0.5.5
 Django==3.1.1
 Werkzeug==0.15.5
-django-appconf==1.0.2
+django-appconf==1.0.4
 django-auth-ldap==1.2.16
 django-autocomplete-light==3.5.1
 django-compressor==2.4

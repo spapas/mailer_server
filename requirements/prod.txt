@@ -1,6 +1,6 @@
 -r base.txt
 
-raven==6.2.1
+raven==6.10.0
 psycopg2==2.8.6
-whitenoise==3.3.1
+whitenoise==5.2.0
 gunicorn==20.0.4

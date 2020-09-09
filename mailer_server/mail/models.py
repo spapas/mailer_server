@@ -13,7 +13,7 @@ BODY_TYPE_CHOICES = (
 class NamedModel(models.Model):
     name = models.CharField(max_length=128, help_text='Please enter a name for this object', )
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     class Meta:

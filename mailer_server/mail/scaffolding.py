@@ -31,6 +31,8 @@ except:
 class DistributionListCreateView(CreateWithInlinesView):
     model = mailer_server.mail.models.DistributionList
     inlines = [mailer_server.mail.forms.EmailAddressInline, ]
+    
+
 
     def forms_valid(self, form, inlines):
         dl = form.save(commit=False)
@@ -48,6 +50,7 @@ class DistributionListCreateView(CreateWithInlinesView):
 class DistributionListUpdateView(UpdateWithInlinesView):
     model = mailer_server.mail.models.DistributionList
     inlines = [mailer_server.mail.forms.EmailAddressInline, ]
+    factory_kwargs = {'extra': 2, }
 
     def forms_valid(self, form, inlines):
         dl = form.save(commit=False)

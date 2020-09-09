@@ -134,7 +134,7 @@ class SendMassMailConfirmFormView(LoginRequiredMixin, UserPermissionRequiredMixi
 
 class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return models.DistributionList.objects.none()
 
         qs = models.DistributionList.objects.filter(created_by=self.request.user)
@@ -147,7 +147,7 @@ class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMix
 
 class MailTemplateAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return models.MailTemplate.objects.none()
 
         qs = models.MailTemplate.objects.filter(created_by=self.request.user)

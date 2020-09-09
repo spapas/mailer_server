@@ -10,12 +10,14 @@ from mailer_server.mail import models
 class EmailAddressInline(InlineFormSet):
     model = models.EmailAddress
     fields = ('name', 'email', )
+    factory_kwargs = {'extra': 1, }
     # extra=1
     
     
 class MailAttachmentInline(InlineFormSet):
     model = models.MailAttachment
     fields = ('name', 'content', )
+    factory_kwargs = {'extra': 1, }
     # extra=1
     
 

@@ -181,7 +181,7 @@ REST_FRAMEWORK = {
 
 MAGIC_FILE_PATH = '/etc/magic'
 
-VERSION="0.1.0"
+VERSION="0.2.0"
 
 
 LOGGING = {

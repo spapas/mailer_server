@@ -23,7 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 @job
-def send_email_async(email_object, task_id, ):
+def send_email_async(email_object, task_id, attachments=None):
     "A job to send email"
 
     logger.info('Sending a new mail async!')
@@ -69,6 +69,7 @@ def send_test_mail(user):
             from_email=email_from,
             to=email_to,
         )
+        
         #send_email_async.delay(email_object, task.id)
         transaction.on_commit(lambda: send_email_async.delay(email_object, task.id, ))
 
@@ -77,7 +78,7 @@ def send_test_mail(user):
         django_send_mail(subject, body, email_from, email_to)
 
 
-def send_mail(mail):
+def send_mail(mail, attachments=None):
     if can_do_async():
         logger.info('Async mail send!')
         task = Task.objects.create(
@@ -85,7 +86,7 @@ def send_mail(mail):
             started_by=mail.created_by,
             result='NOT STARTED',
         )
-        transaction.on_commit(lambda: send_email_async.delay(mail.get_email_object(), task.id, ))
+        transaction.on_commit(lambda: send_email_async.delay(mail.get_email_object(attachments), task.id, attachments))
     else:
         logger.info('Will send the mail synchronously!')
         mail_to = mail.mail_to.split(',')

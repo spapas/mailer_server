@@ -53,16 +53,19 @@ class SendMailAPIView(APIView):
 
         serializer = MailSerializer(data=request.data, )
         attachments = []
+        
         if request.data.get('attachment'):
+            
             attachments = request.data.pop('attachment')
         
         if serializer.is_valid():
             attachment_str = None
+            
             if attachments:
                 attachment_str = ', '.join(at.name for at in  attachments)
             
             mail = serializer.save(created_by=self.request.user, attachments=attachment_str)
-            jobs.send_mail(mail)
+            jobs.send_mail(mail, attachments)
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

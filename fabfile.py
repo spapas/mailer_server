@@ -24,7 +24,7 @@ def commit():
 
 def pull():
     with cd(env.directory):
-        run('https_proxy=http://proxyc.hcg.gr:8080 git fetch origin')
+        run('https_proxy=http://proxy.hcg.gr:8080 git fetch origin')
         run('git merge origin/master')
     print("fetch / merge ok")
 
@@ -33,7 +33,7 @@ def work():
     with cd(env.directory):
         requirements_txt = 'requirements/'+env.env+".txt"
         if os.stat(requirements_txt).st_size > 0:
-            virtualenv('https_proxy=http://proxyc.hcg.gr:8080 pip install -r {0}'.format(requirements_txt) )
+            virtualenv('https_proxy=http://proxy.hcg.gr:8080 pip install -r {0}'.format(requirements_txt) )
         virtualenv('python manage.py migrate')
         virtualenv('python manage.py update_permissions')
         virtualenv('python manage.py compress --force')

@@ -3,12 +3,14 @@ from rest_framework import serializers
 from mailer_server.mail.models import Mail, MassMail
 
 class MailSerializer(serializers.ModelSerializer):
+    attachment = serializers.FileField(write_only=True, required=False, )
+
     class Meta:
         model = Mail
         fields = (
             'id', 'subject', 'body', 'mail_from',
             'mail_to', 'cc', 'bcc', 'body_type',
-            'created_on', 'created_by', 'reply_to', 
+            'created_on', 'created_by', 'reply_to', 'attachment',
 
         )
         read_only_fields = ('id', 'created_on', 'created_by',)

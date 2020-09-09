@@ -4,7 +4,7 @@ mailer_server
 Requirements
 ------------
 
-- python 2.7
+- python 3.x
 - virtualenv
 - redis
 - postgresql (recommeneded - you can use mysql of sqlite if you know the consequences)
@@ -27,7 +27,7 @@ Steps to deploy
 1. Create a parent folder for storing app - I used ``/home/serafeim/mailer_server``
 1. ``cd /home/serafeim/mailer_server``
 1. ``git clone https://github.com/spapas/mailer_server``
-1. ``virtualenv venv``
+1. ``python3 -m venv venv``
 1. ``mkdir static``
 1. ``cd /home/serafeim/mailer_server/mailer_server``
 1. ``pip install -r requirements/prod.txt``
@@ -71,6 +71,7 @@ directory structure for a django project on windows: Add a ``mailer_server`` par
 a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from github) that will contain manage.py etc.
 
 - Install redis for windows from here: https://github.com/MSOpenTech/redis/releases and run it - it will listen on default port 6379
+- Notice that you can also install redis in a WSL and it will work fine
 - Activate the virtual environment: Run dovenv.bat from inside ``mailer_server/mailer_server``
 - Install this package https://github.com/michaelbrooks/rq-win/blob/master/rq_win/worker.py using `pip install git+https://github.com/michaelbrooks/rq-win.git#egg=rq-win`
 - Run the development server from inside the virtual env through rsp.bat

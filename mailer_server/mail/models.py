@@ -37,6 +37,8 @@ class Mail(models.Model):
     cc = models.TextField(blank=True, null=True, help_text='Enter a list of cc separated with commas (,)' )
     bcc = models.TextField(blank=True, null=True, help_text='Enter a list of bcc separated with commas (,)' )
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
+    
+    attachments = models.TextField(blank=True, null=True, )
 
     def __unicode__(self):
         return u'{0} {1} {2} {3}'.format(self.created_on, self.created_by, self.id, self.subject)

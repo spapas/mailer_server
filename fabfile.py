@@ -45,7 +45,7 @@ def touch_gunicorn():
     
     run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD+'  status mlrsrvgunicorn ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
     print("Restarting rqworker");
-    run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrgworker ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
+    run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrqworker ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
 
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"

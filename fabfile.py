@@ -1,6 +1,7 @@
 from __future__ import with_statement
 from fabric.api import *
 import os
+from mailer_server.settings.local import SUPERVISORD_PASSWORD
 
 
 def check_migrations():
@@ -41,9 +42,9 @@ def work():
 
 def touch_gunicorn():
     print("Restarting gunicorn");
-    #run("supervisorctl restart mailerserveruwsgi")
+    run(r'supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvgunicorn | sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
     print("Restarting rqworker");
-    #run("supervisorctl restart mailerserverrqworker")
+    run(r'supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrgworker | sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
 
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"

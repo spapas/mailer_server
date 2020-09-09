@@ -95,3 +95,10 @@ a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from
 - Run the development server from inside the virtual env through rsp.bat
 - Run the windows rq-worker from inside another virtual env through win_rqworker.bat
 - You may now visit http://127.0.0.1:8000 and try adding jobs
+
+Authentication and Authorization
+-------------------------------
+
+Please configure the project to use the proper authentication method; right now it allows only LDAP (check out `prod.py` for production settings).
+
+To give permissions to your users you'll need to first create a superuser (using `python manage.py createsuperuser`) and then go to the django-admin and give the `Application admin` or `Application user` perms to your users or groups.

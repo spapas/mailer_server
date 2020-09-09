@@ -1,8 +1,12 @@
 ﻿{% extends "site_base.html" %}
 {% load static crispy_forms_tags %}
 {% load widget_tweaks %}
-{% block extra_style_ %}
-    
+{% block extra_style %}
+    <style>
+        .select2-selection__rendered {
+            line-height: 14px !important;
+        }
+    </style>
 {% endblock %}
 
 {% block head_title %}Send mass mail{% endblock %}

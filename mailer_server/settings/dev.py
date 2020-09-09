@@ -45,13 +45,14 @@ CACHES = {
 SECRET_KEY = '111222333overrideme1298mailer_server031892jklaksdiasdlkajsdlkasjmailer_serverdlkdfgdfg'
 
 try:
-    from .local import *
-    from .ldap_conf import *
+    from mailer_server.settings.local import *
+    from mailer_server.settings.ldap_conf import *
 
     logger = logging.getLogger('django_auth_ldap')
     logger.addHandler(logging.StreamHandler())
     logger.setLevel(logging.DEBUG)
-except:
-    pass
+except Exception as a:
+    print(a)
+    print("ERR")
 
 MAGIC_FILE_PATH = 'c:/util/magic_file'

@@ -64,7 +64,7 @@
             <h2>Choices</h2>
             {% if user.is_authenticated %}
                 <h4>Welcome, {{ user }}</h4>
-                {% if  perms.core.admin %}
+                {% if perms.core.admin %}
                     Admin access
                 {% elif perms.core.user %}
                     User access

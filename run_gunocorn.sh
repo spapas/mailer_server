@@ -1,0 +1,1 @@
+gunicorn mailer_server.wsgi -b 0.0.0.0:8003 -w 3 --reload

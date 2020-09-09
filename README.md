@@ -27,7 +27,7 @@ Requirements
 - redis
 - postgresql (recommeneded - you can use mysql of sqlite if you know the consequences)
 - supervisord (recommended - you can use whatever method you want to run your workers)
-- uwsgi (recommended - you can use any wsgi server you want, i.e gunicorn, apache mod_wsgi etc)
+- gunicorn (recommended - you can use any wsgi server you want, i.e uwsgi, apache mod_wsgi etc)
 - nginx (recommended - you can use any web server you want)
 
 Configuring redis
@@ -55,7 +55,7 @@ Steps to deploy
 1. ``source ../venv/bin/activate``
 1. ``python manage.py createsuperuser``
 1. ``cp /home/serafeim/mailer_server/mailer_server/etc/mlrsrv.ini /home/serafeim/mailer_server/mlrsrv.ini
-1. ``sh ./run_uwsgi.sh``
+1. ``sh ./run_gunicorn.sh``
 
 This will run the app through uwsgi as a daemon, listening on unix socket /tmp/mlrsrv.ini (which can be changed directly from
 the ``mlrsrv.ini`` uwsgi configuration file). 

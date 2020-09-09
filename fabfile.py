@@ -5,14 +5,14 @@ import os
 
 def check_migrations():
     "Do migrations check"
-    print "Checking migrations"
+    print("Checking migrations")
     local('python manage.py makemigrations --dry-run --check')
 
 def pep8():
     "Do pep8 styule checks"
-    print "Check with pep8"
+    print("Check with pep8")
     # local('pep8 --max-line-length=160 --filename=*.py mailer_server --exclude migrations')
-    print "pep8 ok!"
+    print("pep8 ok!")
 
 def commit():
     local('git add .')
@@ -20,13 +20,13 @@ def commit():
         local('git commit')
     with settings(warn_only=True):
         local('git push origin master')
-    print "Commit ok"
+    print("Commit ok")
 
 def pull():
     with cd(env.directory):
         run('git fetch origin')
         run('git merge origin/master')
-    print "fetch / merge ok"
+    print("fetch / merge ok")
 
 def work():
     "Do work on server (copy settings, migrate and run collect static)"
@@ -39,11 +39,11 @@ def work():
         virtualenv('python manage.py compress --force')
         virtualenv('python manage.py collectstatic --noinput')
 
-def touch_wsgi():
-    print("Restarting uwsgi");
-    run("supervisorctl restart mailerserveruwsgi")
+def touch_gunicorn():
+    print("Restarting gunicorn");
+    #run("supervisorctl restart mailerserveruwsgi")
     print("Restarting rqworker");
-    run("supervisorctl restart mailerserverrqworker")
+    #run("supervisorctl restart mailerserverrqworker")
 
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"
@@ -52,7 +52,7 @@ def full_deploy():
     commit()
     pull()
     work()
-    touch_wsgi()
+    touch_gunicorn()
 
 def virtualenv(command):
     run(env.activate + '&&' + command)
@@ -70,7 +70,7 @@ def prod():
     "PROD settings"
     env.env = "prod"
     env.user = 'serafeim'
-    env.hosts = ['devapps.hcg.gr']
+    env.hosts = ['172.19.130.142']
     env.directory = '/home/serafeim/mailer_server/mailer_server'
     env.activate = 'source /home/serafeim/mailer_server/venv/bin/activate'
 

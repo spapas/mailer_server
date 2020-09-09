@@ -1,7 +1,7 @@
 from __future__ import unicode_literals
 from django.conf import settings
 from django.core.mail import EmailMessage
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 
 BODY_TYPE_CHOICES = (
@@ -23,9 +23,9 @@ class NamedModel(models.Model):
 class Mail(models.Model):
     "A model to save sent mails in the database"
     created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    mail_template = models.ForeignKey('MailTemplate', blank=True, null=True, )
+    mail_template = models.ForeignKey('MailTemplate', blank=True, null=True, on_delete=models.SET_NULL )
 
     subject = models.TextField(blank=True, null=True, )
     body = models.TextField(blank=True, null=True, )
@@ -39,7 +39,7 @@ class Mail(models.Model):
     body_type = models.CharField(choices=BODY_TYPE_CHOICES, max_length=32, default='plain', )
 
     def __unicode__(self):
-        return u'{0} {1} {2} {3}'.format(self.created_on, created_by, self.id, self.subject)
+        return u'{0} {1} {2} {3}'.format(self.created_on, self.created_by, self.id, self.subject)
 
     def get_tuple(self):
         return (
@@ -70,11 +70,11 @@ class Mail(models.Model):
 class MassMail(models.Model):
     "A model to save sent mass mails in the database"
     created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
-    mail_template = models.ForeignKey('MailTemplate')
+    mail_template = models.ForeignKey('MailTemplate', on_delete=models.PROTECT)
 
-    distribution_list_to = models.ForeignKey('DistributionList')
+    distribution_list_to = models.ForeignKey('DistributionList', on_delete=models.PROTECT)
 
     def get_mails(self):
         mail_list = []
@@ -98,13 +98,13 @@ class MassMail(models.Model):
 class EmailAddress(NamedModel):
     "A simple model for an email address"
     email = models.EmailField()
-    distribution_list = models.ForeignKey('DistributionList')
+    distribution_list = models.ForeignKey('DistributionList', on_delete=models.PROTECT)
 
 
 class DistributionList(NamedModel):
     "A list of  emails to be used later"
     created_on = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def get_absolute_url(self):
         return reverse('dl_mail_distributionlist_detail', args=[self.id] )
@@ -114,7 +114,7 @@ class MailTemplate(NamedModel):
     "A model to save emails to be send later"
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     subject = models.TextField(help_text='Enter the subject of this template', )
     body = models.TextField(help_text='Enter the body of this template - can be either plain text or html depending on body type')
@@ -152,6 +152,6 @@ class MailTemplate(NamedModel):
 
 
 class MailAttachment(NamedModel):
-    mail_template = models.ForeignKey('MailTemplate')
+    mail_template = models.ForeignKey('MailTemplate', on_delete=models.PROTECT)
     content = models.FileField(help_text='Pick a file to use as the content of this mail attachment')
     content_type = models.CharField(max_length=128, default='text/plain', )

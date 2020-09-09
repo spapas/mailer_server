@@ -1,3 +1,5 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+    "python.pythonPath": "C:\\progr\\py3\\mailer_server\\venv\\Scripts\\python.exe",
+    "python.formatting.provider": "black"
 }

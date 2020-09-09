@@ -75,7 +75,7 @@ class SendMassMailAPIView(APIView):
             if jobs.send_mass_mail(mm_serializer, self.request.user):
                 return Response( status=status.HTTP_200_OK)
             else:
-                print "Cannot send mails - service not available!"
+                print ("Cannot send mails - service not available!")
                 return Response(status=status.HTTP_503_SERVICE_UNAVAILABLE)
         return Response(mm_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -135,7 +135,7 @@ class SendMassMailConfirmFormView(LoginRequiredMixin, UserPermissionRequiredMixi
 class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated():
-            return DistributionList.objects.none()
+            return models.DistributionList.objects.none()
 
         qs = models.DistributionList.objects.filter(created_by=self.request.user)
 
@@ -148,7 +148,7 @@ class DistributionListAutocomplete(LoginRequiredMixin, UserPermissionRequiredMix
 class MailTemplateAutocomplete(LoginRequiredMixin, UserPermissionRequiredMixin, autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated():
-            return MailTemplate.objects.none()
+            return models.MailTemplate.objects.none()
 
         qs = models.MailTemplate.objects.filter(created_by=self.request.user)
 

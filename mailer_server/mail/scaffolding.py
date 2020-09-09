@@ -23,7 +23,7 @@ try:
         
 except:
     # If magic is not configured correctly, just return a default mimetype
-    print "magic is not configured correctly - will just return octet-stream for file content type"
+    print ("magic is not configured correctly - will just return octet-stream for file content type")
     def get_content_type(f):
         return 'application/octet-stream'
 

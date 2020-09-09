@@ -2,8 +2,9 @@ from django.conf import settings
 from django.conf.urls import url, include 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.views import login, logout
+from django.contrib.auth import login, logout
 from django.views.generic import TemplateView
+from django.contrib.auth import views as auth_views
 
 from mailer_server.core.views import CreateTokenFormView
 
@@ -13,7 +14,7 @@ urlpatterns = [
     
     url(r'create_token$', CreateTokenFormView.as_view(template_name='create_token.html'), name='create_token'),
     
-    url(r'login/$', login, name='auth_login'),
-    url(r'logout/$', logout, {'template_name': 'logout.html'}, name='auth_logout'),
+    url(r'login/$', auth_views.LoginView.as_view(), name='auth_login'),
+    url(r'logout/$', auth_views.LogoutView.as_view(template_name='logout.html'), name='auth_logout'),
 
 ]

@@ -10,13 +10,13 @@ from mailer_server.mail import models
 class EmailAddressInline(InlineFormSet):
     model = models.EmailAddress
     fields = ('name', 'email', )
-    extra=1
+    # extra=1
     
     
 class MailAttachmentInline(InlineFormSet):
     model = models.MailAttachment
     fields = ('name', 'content', )
-    extra=1
+    # extra=1
     
 
 class DistributionListForm(forms.ModelForm):

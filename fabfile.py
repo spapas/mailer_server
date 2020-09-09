@@ -42,9 +42,10 @@ def work():
 
 def touch_gunicorn():
     print("Restarting gunicorn");
-    run(r'supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvgunicorn | sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
+    
+    run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD+'  status mlrsrvgunicorn ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
     print("Restarting rqworker");
-    run(r'supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrgworker | sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
+    run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrgworker ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
 
 def full_deploy():
     "Commit - pull - do work - and restart uwsgi"

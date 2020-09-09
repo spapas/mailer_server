@@ -1,6 +1,24 @@
 mailer_server
 =============
 
+A mailer server for use with your own SMTP server. 
+
+Rationale
+---------
+
+One common need of you applications is to configure them to send procedural email to their users. This may take some time (even seconds 
+depending on your SMTP server) and you'll probably need to make it asynchronous after a little while. The problem is that configuring the
+asynchrnous infrastracture needed (celery or rq or whatever) just for this kind of job is not worth it. This project should help you with
+this. You install this in a server and then use the API to call it when you send the email. The API is asynchronous and will answer immediately
+so you the users won't experience any delay.
+
+There are various other goodies like seeing the emails that have been send, allowing for email templates and distribution lists (for
+users to create their own lists and send email to these people) and even a django email backend (https://github.com/spapas/django-mailer-server-backend) which you can configure django with so as to use the mailer server for all emails.
+
+You shouldn't use ths project if you use something like mailgun or sendgrid or another similar email provider but if you still send
+emails through your SMTP server you will find this project invaluable. We're using it in our organization for many years as a 
+centralized email sending service and it's used by more than 10 different applications. 
+
 Requirements
 ------------
 

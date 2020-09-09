@@ -35,6 +35,18 @@ where, massapicall.txt contains the mass mail data in JSON:
 </pre>
 
 
+<h4>Send email with attachment</h4>
+You'll need to post multipart/form-data for this to work. Here's how 
+<pre>curl -v -H "Content-Type: multipart/form-data" -H "Authorization: Token CHANGE_WITH_YOUR_TOKEN" 
+    -X POST -F subject=world -F body="hello world" -F attachment=@apicall.txt -F attachment=@massapicall.txt 
+    http://MAILER.SERVER.ADDRESS/mail/api/send_mass_mail/</pre>
+
+Notice that this time the parameters will be passed one by one using -F. You can then add as many
+attachments as you want using the attachment parameter.
+
+</pre>
+
+
         <h3>Usage</h3>
         <h4>Email addresses</h4>
         An email address can take two forms. Either
@@ -47,8 +59,7 @@ where, massapicall.txt contains the mass mail data in JSON:
         These two forms can be used anywhere (i.e in the mail_from address, mail_to list of addresses etc) but 
         please don't use comma (',') to the Full name of the recipient because it is used as a separator between
         email addresses.
-        
-        
+        <hr />
         
         <a href='{% url "home" %}' class='btn btn-primary' >Return</a>
     </div>

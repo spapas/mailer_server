@@ -87,11 +87,10 @@ def send_test_mail(user):
 
 
 def prepare_mail(mail, attachments):
-    print("PREP")
     email_object = mail.get_email_object()
     for a in attachments:
         email_object.attach(a.name, a.read(), a.content_type)
-    print(dir(attachments[0]))
+    
     return email_object
 
 

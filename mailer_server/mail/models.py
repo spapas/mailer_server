@@ -139,7 +139,7 @@ class MailTemplate(NamedModel):
             body_type=self.body_type,
         )
 
-    def get_email_object(self, attachments=None):
+    def get_email_object(self):
         attachments = [(x.name, x.content.read(), x.content_type) for x in self.mailattachment_set.all()]
         email = EmailMessage(
             subject=self.subject,
@@ -150,9 +150,7 @@ class MailTemplate(NamedModel):
         )
 
         email.content_subtype = self.body_type
-        if attachments:
-            for a in attachments:
-                email.attach_file(a)
+        
         return email
 
 

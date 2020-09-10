@@ -1,4 +1,4 @@
 curl -v -H "Content-Type: multipart/form-data" ^
- -H "Authorization: Token efb50ddb2fe1ff56fbe5804ed89e9733f9cf1099" ^
- -X POST -F mail_to=spapas@gmail.com -F subject=world -F body="hello world"  -F attachment=@massapicall.txt ^
- http://mlrsrv.hcg.gr/mail/api/send_mail/
+ -H "Authorization: Token da474acd50a6485a93ac5be434d2848af8119464" ^
+ -X POST -F mail_to=spapas@hcg.gr -F subject=world -F body="hello world"  -F attachment=@massapicall.txt -F attachment=@apicall.txt ^
+ http://127.0.0.1:8000/mail/api/send_mail/

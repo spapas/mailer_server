@@ -18,15 +18,18 @@ from mailer_server.tasks.models import Task
 from mailer_server.mail.models import Mail
 
 import logging
+
 logger = logging.getLogger(__name__)
 
 
-
 @job
-def send_email_async(email_object, task_id, attachments=None):
+def send_email_async(
+    email_object,
+    task_id,
+):
     "A job to send email"
 
-    logger.info('Sending a new mail async!')
+    logger.info("Sending a new mail async!")
 
     job = get_current_job()
     job_id = job.get_id()
@@ -41,27 +44,27 @@ def send_email_async(email_object, task_id, attachments=None):
 
 
 def can_do_async():
-    redis_conn = django_rq.get_connection('default')
+    redis_conn = django_rq.get_connection("default")
     queue = Queue(connection=redis_conn)
     workers = Worker.all(connection=redis_conn)
-    return len(workers)>0
+    return len(workers) > 0
 
 
-email_from = 'noreply@hcg.gr'
+email_from = "noreply@hcg.gr"
 
 
 def send_test_mail(user):
-    logger.error('Something went wrong!')
-    logger.info('Something went right!')
+    logger.error("Something went wrong!")
+    logger.info("Something went right!")
     email_to = settings.ADMINS
     body = "TEST email from {0}".format(user)
     subject = "TEST EMAIL"
     if can_do_async():
-        logger.info('Async test mail send!')
+        logger.info("Async test mail send!")
         task = Task.objects.create(
-            name='send_test_mail',
+            name="send_test_mail",
             started_by=user,
-            result='NOT STARTED',
+            result="NOT STARTED",
         )
         email_object = EmailMessage(
             subject=subject,
@@ -69,39 +72,58 @@ def send_test_mail(user):
             from_email=email_from,
             to=email_to,
         )
-        
-        #send_email_async.delay(email_object, task.id)
-        transaction.on_commit(lambda: send_email_async.delay(email_object, task.id, ))
+
+        # send_email_async.delay(email_object, task.id)
+        transaction.on_commit(
+            lambda: send_email_async.delay(
+                email_object,
+                task.id,
+            )
+        )
 
     else:
-        logger.info('Will send the mail synchronously!')
+        logger.info("Will send the mail synchronously!")
         django_send_mail(subject, body, email_from, email_to)
+
+
+def prepare_mail(mail, attachments):
+    print("PREP")
+    email_object = mail.get_email_object()
+    for a in attachments:
+        email_object.attach(a.name, a.read(), a.content_type)
+    print(dir(attachments[0]))
+    return email_object
 
 
 def send_mail(mail, attachments=None):
     if can_do_async():
-        logger.info('Async mail send!')
+        logger.info("Async mail send!")
         task = Task.objects.create(
-            name='send_mail',
+            name="send_mail",
             started_by=mail.created_by,
-            result='NOT STARTED',
+            result="NOT STARTED",
         )
-        transaction.on_commit(lambda: send_email_async.delay(mail.get_email_object(attachments), task.id, attachments))
+        transaction.on_commit(
+            lambda: send_email_async.delay(
+                prepare_mail(mail, attachments),
+                task.id,
+            )
+        )
     else:
-        logger.info('Will send the mail synchronously!')
-        mail_to = mail.mail_to.split(',')
+        logger.info("Will send the mail synchronously!")
+        mail_to = mail.mail_to.split(",")
         django_send_mail(mail.subject, mail.body, mail.mail_from, mail_to)
 
 
 @job
 def send_mass_mail_async(mm_serializer, user):
     task = Task.objects.create(
-        name='send_mass_mail',
+        name="send_mass_mail",
         started_by=user,
-        result='NOT STARTED',
+        result="NOT STARTED",
     )
 
-    logger.info('Sending mass mails!')
+    logger.info("Sending mass mails!")
     mass_mail = mm_serializer.save(created_by=user)
     mail_list = mass_mail.get_mails()
     email_list = mass_mail.get_emails()
@@ -109,15 +131,15 @@ def send_mass_mail_async(mm_serializer, user):
     Mail.objects.bulk_create(mail_list)
     connection = get_connection()
     connection.send_messages(email_list)
-    #django_send_mass_mail(tuple(email_tuple_list))
+    # django_send_mass_mail(tuple(email_tuple_list))
 
 
 def send_mass_mail(mass_mail, user):
     if can_do_async():
-        logger.info('Will send the mass mails!')
+        logger.info("Will send the mass mails!")
         transaction.on_commit(lambda: send_mass_mail_async.delay(mass_mail, user))
 
         return True
     else:
-        logger.error('Cannot do async, will not send mails!')
+        logger.error("Cannot do async, will not send mails!")
         return False

@@ -1,7 +1,7 @@
 mailer_server
 =============
 
-A mailer server for use with your own SMTP server. You install the app, configure it with your SMTP server and can use the API (and other feautures) to send emails. 
+A mailer server for use with your own SMTP server. You install the app, configure it with your SMTP server and can use the API (and other features) to send emails. 
 
 Some features
 
@@ -17,15 +17,15 @@ Rationale
 One common need of your applications is to send transactional email to their users. If you want to use your own SMTP server (instead of a
 mail sending service) you'll soon find out that sending email through SMTP may take some time (even seconds 
 depending on your SMTP server) and you'll probably want to make it asynchronous after a little while. The problem is that configuring the
-asynchrnous infrastracture needed (celery or rq or whatever) just for this kind of job is not worth it. You shouldn't need to install all
+asynchronous infrastracture needed (celery or rq or whatever) just for this kind of job is not worth it. You shouldn't need to install all
 these dependencies and moving parts just to be able to send a couple of emails. This project should help you with
 this. You install this in a server and then use the API to call it when you send the email. The API is asynchronous and will answer very
 fast (some ms) so you the users won't experience any extra delay.
 
-There are various other goodies like seeing the emails that have been send, allowing for email templates and distribution lists (for
+There are various other goodies like seeing the emails that have been sent, allowing for email templates and distribution lists (for
 users to create their own lists and send email to these people) and even a django email backend (https://github.com/spapas/django-mailer-server-backend) which you can configure django with so as to use the mailer server for all emails.
 
-You shouldn't use ths project if you use something like mailgun or sendgrid or another similar email provider but if you still send
+You shouldn't use this project if you use something like mailgun or sendgrid or another similar email provider but if you still send
 emails through your SMTP server you will find this project invaluable. We're using it in our organization for many years as a 
 centralized email sending service and it's used by more than 10 different applications. Also, if you have a *single* app then
 you also don't need this; just configure django-rq for this particular app! This project is helpful if you are an organization
@@ -37,7 +37,7 @@ Requirements
 - python 3.x
 - virtualenv
 - redis
-- postgresql (recommeneded - you can use mysql of sqlite if you know the consequences)
+- postgresql (recommended - you can use mysql of sqlite if you know the consequences)
 - supervisord (recommended - you can use whatever method you want to run your workers)
 - gunicorn (recommended - you can use any wsgi server you want, i.e uwsgi, apache mod_wsgi etc)
 - nginx (recommended - you can use any web server you want)
@@ -96,7 +96,7 @@ Running on windows
 ------------------
 
 I use windows as my development environment and I usually feel like the child of a lesser god when trying to run
-stuff on my dev env. However this project *can* be run on windows (for development only)! Now, as a general tip, I propose the following
+stuff on my dev env. However, this project *can* be run on windows (for development only)! Now, as a general tip, I propose the following
 directory structure for a django project on windows: Add a ``mailer_server`` parent directory and inside it create
 a python virtual environment named ``venv`` and a ``mailer_server`` (cloned from github) that will contain manage.py etc.
 
@@ -113,4 +113,4 @@ Authentication and Authorization
 
 Please configure the project to use the proper authentication method; right now it allows only LDAP (check out `prod.py` for production settings).
 
-To give permissions to your users you'll need to first create a superuser (using `python manage.py createsuperuser`) and then go to the django-admin and give the `Application admin` or `Application user` perms to your users or groups.
+To give permissions to your users, you'll need to first create a superuser (using `python manage.py createsuperuser`) and then go to the django-admin and give the `Application admin` or `Application user` perms to your users or groups.

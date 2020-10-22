@@ -17,7 +17,7 @@ class Command(BaseCommand):
             "dry" if dry else "no dry"
         ))
 
-        queue = get_queue()
+        queue = get_queue('default')
         fq = FailedJobRegistry(queue)
 
         tot = 0

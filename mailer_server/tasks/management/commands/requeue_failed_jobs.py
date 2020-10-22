@@ -22,7 +22,7 @@ class Command(BaseCommand):
         for ji in fq.job_ids:
             tot += 1
             if not dry:
-                print "Requeing {0}".format(ji)
+                print("Requeing {0}".format(ji))
                 fq.requeue(ji)
 
         print("Finished requeue failed jobs at {0} - requeued {1} jobs (if not dry)".format(

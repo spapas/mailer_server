@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
-from django_rq.queues import get_failed_queue
+from rq.registry import FailedJobRegistry
+from django_rq import get_queue
 import datetime
 
 class Command(BaseCommand):
@@ -16,7 +17,8 @@ class Command(BaseCommand):
             "dry" if dry else "no dry"
         ))
 
-        fq = get_failed_queue()
+        queue = get_queue()
+        fq = FailedJobRegistry(queue)
 
         tot = 0
         for ji in fq.job_ids:

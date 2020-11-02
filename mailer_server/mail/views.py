@@ -224,3 +224,19 @@ class SendMailCreateView(LoginRequiredMixin, UserPermissionRequiredMixin, Create
         jobs.send_mail(mail)
         return HttpResponseRedirect(reverse('home'))        
         
+
+from rest_framework import generics
+import django_filters.rest_framework
+
+
+class MailListAPIView(generics.ListAPIView):
+    serializer_class = MailSerializer
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_class = filters.MailFilter
+    queryset = models.Mail.objects.all()
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        user = self.request.user
+        return qs.filter(created_by=user)
+        

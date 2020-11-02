@@ -13,6 +13,7 @@ class MailFilter(django_filters.FilterSet):
             'body': ['icontains'], 
             'created_by__username': ['icontains'], 
             'mail_template__name': ['icontains'],
+            'created_on': ['gte', 'lte'],
         }
         
         

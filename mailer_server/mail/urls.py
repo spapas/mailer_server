@@ -8,12 +8,14 @@ from django.views.generic import TemplateView
 from mailer_server.mail.views import (
     send_test_email, SendMailAPIView, DistributionListAutocomplete, 
     MailTemplateAutocomplete, SendMassMailFormView, SendMassMailAPIView, UploadDistributionListView,
-    DownloadDistributionListView, MailListView, MassMailListView, SendMassMailConfirmFormView, SendMailCreateView
+    DownloadDistributionListView, MailListView, MassMailListView, SendMassMailConfirmFormView, SendMailCreateView,
+    MailListAPIView
 )
 from mailer_server.mail.scaffolding import DistributionListCrudManager, MailTemplateCrudManager
 
 urlpatterns = [
     url(r'send_test_email$', send_test_email, name='send_test_email'),
+    url(r'^api/list_mail/$', MailListAPIView.as_view(), name='api_list_mail', ),   
     url(r'^api/send_mail/$', SendMailAPIView.as_view(), name='api_send_mail', ),   
     url(r'^api/send_mass_mail/$', SendMassMailAPIView.as_view(), name='api_send_mass_mail', ),   
 

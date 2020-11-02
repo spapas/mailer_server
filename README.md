@@ -185,7 +185,6 @@ You'll need to post multipart/form-data for this to work. Here's how
 ```curl -v -H "Content-Type: multipart/form-data" -H "Authorization: Token CHANGE_WITH_YOUR_TOKEN"  -X POST -F subject=world -F body="hello world" -F attachment=@apicall.txt -F attachment=@massapicall.txt  http://MAILER.SERVER.ADDRESS/mail/api/send_mass_mail/```
 
 
-
 Usage
 -----
      

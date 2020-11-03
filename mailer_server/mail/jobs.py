@@ -130,7 +130,13 @@ def send_mass_mail_async(mm_serializer, user):
     Mail.objects.bulk_create(mail_list)
     connection = get_connection()
     connection.send_messages(email_list)
-    # django_send_mass_mail(tuple(email_tuple_list))
+    
+    job = get_current_job()
+    job_id = job.get_id()
+    task.job_id = job_id
+    task.finished_on = timezone.now()
+    task.result = "OK"
+    task.save()
 
 
 def send_mass_mail(mass_mail, user):

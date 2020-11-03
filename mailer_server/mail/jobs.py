@@ -54,8 +54,8 @@ email_from = "noreply@hcg.gr"
 
 
 def send_test_mail(user):
-    logger.error("Something went wrong!")
-    logger.info("Something went right!")
+    logger.error("Something went wrong (TEST IGNORE ME)!")
+    logger.info("Something went right (TEST IGNORE ME)!")
     email_to = settings.ADMINS
     body = "TEST email from {0}".format(user)
     subject = "TEST EMAIL"

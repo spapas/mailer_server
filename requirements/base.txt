@@ -18,7 +18,7 @@ django-reversion==3.0.8
 django-rq==2.3.2
 django-tables2==2.3.1
 django-widget-tweaks==1.4.1
-djangorestframework==3.11.1
+djangorestframework==3.11.2
 python-dateutil==2.6.1
 python-ldap==3.3.1
 python-magic==0.4.13

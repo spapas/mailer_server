@@ -5,9 +5,6 @@ DEBUG = False
 SITE_ID = 1
 COMPRESS_OFFLINE = True
 
-INSTALLED_APPS += (
-    'raven.contrib.django.raven_compat',
-)
 
 INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic', )
 

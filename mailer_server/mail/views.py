@@ -207,11 +207,19 @@ class MailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerM
     table_class = tables.MailTable
     filter_class = filters.MailFilter
 
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.select_related('created_by')
+
 
 class MassMailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
     model = models.MassMail
     table_class = tables.MassMailTable
     filter_class = filters.MassMailFilter
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.select_related('created_by', 'mail_template', 'distribution_list_to' )
 
 
 class SendMailCreateView(LoginRequiredMixin, UserPermissionRequiredMixin, CreateView):

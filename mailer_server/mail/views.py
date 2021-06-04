@@ -209,7 +209,8 @@ class MailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerM
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.select_related('created_by')
+        return qs.select_related('created_by').order_by('-created_on')
+
 
 
 class MassMailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOwnerMixin, FilteredSingleTableMixin, ListView):
@@ -219,7 +220,7 @@ class MassMailListView(LoginRequiredMixin, UserPermissionRequiredMixin, FilterOw
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.select_related('created_by', 'mail_template', 'distribution_list_to' )
+        return qs.select_related('created_by', 'mail_template', 'distribution_list_to' ).order_by('-created_on')
 
 
 class SendMailCreateView(LoginRequiredMixin, UserPermissionRequiredMixin, CreateView):

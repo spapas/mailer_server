@@ -31,8 +31,6 @@ except:
 class DistributionListCreateView(CreateWithInlinesView):
     model = mailer_server.mail.models.DistributionList
     inlines = [mailer_server.mail.forms.EmailAddressInline, ]
-    
-
 
     def forms_valid(self, form, inlines):
         dl = form.save(commit=False)
@@ -126,7 +124,7 @@ class MailTemplateUpdateView(UpdateWithInlinesView):
         self.object = dl
         for formset in inlines:
             for f in formset:
-                if f.cleaned_data:
+                if f.cleaned_data and not f.cleaned_data.get('DELETE'):
                     f.instance.content_type = get_content_type(f.cleaned_data['content'].read())
             formset.save()
         return HttpResponseRedirect(self.get_success_url())

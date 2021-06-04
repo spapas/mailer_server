@@ -100,27 +100,34 @@ class SendMassMailConfirmFormView(LoginRequiredMixin, UserPermissionRequiredMixi
     template_name = 'send_mass_mail_confirm.html'
 
     def get_form(self, ):
+        
         if self.request.method == 'GET':
             mt_id = self.request.GET.get('mail_template')
             dl_id = self.request.GET.get('distribution_list')
 
             self.mt = get_object_or_404(models.MailTemplate, pk=mt_id)
             self.dl = get_object_or_404(models.DistributionList, pk=dl_id)
+        else:
+            mt_id = self.request.POST.get('mail_template')
+            dl_id = self.request.POST.get('distribution_list')
 
-        return super(SendMassMailConfirmFormView, self).get_form()
+            self.mt = get_object_or_404(models.MailTemplate, pk=mt_id)
+            self.dl = get_object_or_404(models.DistributionList, pk=dl_id)
+
+        return super().get_form()
 
     def get_initial(self, ):
-        gi = super(SendMassMailConfirmFormView, self).get_initial()
+        gi = super().get_initial()
         if self.request.method == 'GET':
-            gi['distribution_list'] = self.mt
-            gi['mail_template'] = self.dl
+            gi['distribution_list'] = self.dl
+            gi['mail_template'] = self.mt
         return gi
 
-    def get_context_data(self):
-        ctx = super(SendMassMailConfirmFormView, self).get_context_data()
-
-        ctx['mt'] = self.mt
-        ctx['dl'] = self.dl
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        if self.request.method == 'GET':
+            ctx['mt'] = self.mt
+            ctx['dl'] = self.dl
 
         return ctx 
 

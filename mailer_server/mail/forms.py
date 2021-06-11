@@ -1,20 +1,20 @@
 from django import forms
 from mailer_server.mail import models
-from extra_views import InlineFormSet
+from extra_views import InlineFormSetFactory
 from dal import autocomplete
 
 import unicodecsv as csv
 
 from mailer_server.mail import models
 
-class EmailAddressInline(InlineFormSet):
+class EmailAddressInline(InlineFormSetFactory):
     model = models.EmailAddress
     fields = ('name', 'email', )
     factory_kwargs = {'extra': 1, }
     # extra=1
     
     
-class MailAttachmentInline(InlineFormSet):
+class MailAttachmentInline(InlineFormSetFactory):
     model = models.MailAttachment
     fields = ('name', 'content', )
     factory_kwargs = {'extra': 1, }

@@ -28,7 +28,7 @@ You shouldn't use this project if you use something like mailgun or sendgrid or 
 emails through your SMTP server you will find this project invaluable. We're using it in our organization for many years as a 
 centralized email sending service and it's used by more than 10 different applications. Also, if you have a *single* app then
 you also don't need this; just configure django-rq for this particular app! This project is helpful if you are an organization
-that have (or going to have) a handful of different apps that will want to send transactional email.
+that has (or going to have) a handful of different apps that will want to send transactional email.
 
 ## Requirements
 

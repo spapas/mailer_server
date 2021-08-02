@@ -9,9 +9,9 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^', include('mailer_server.core.urls')),
     url(r'^mail/', include('mailer_server.mail.urls')),
+    url(r'^admin/django-rq/', include('django_rq.urls')),
     url(r'^admin/', admin.site.urls),
     
-    url(r'^admin/django-rq/', include('django_rq.urls')),
 ]
 
 if settings.DEBUG:

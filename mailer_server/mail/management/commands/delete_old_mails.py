@@ -15,3 +15,5 @@ class Command(BaseCommand):
         
         print("Will delete mails older than", date, "i.e", len(mails), "mails.")
         mails.delete()
+
+        # TODO: Also delete old tasks

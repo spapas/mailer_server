@@ -36,6 +36,7 @@ def send_email_async(
     task = Task.objects.get(id=task_id)
     task.job_id = job_id
     task.result = "STARTED"
+    task.started_on = timezone.now()
     task.save()
 
 

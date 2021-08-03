@@ -39,9 +39,7 @@ def send_email_async(
     task.started_on = timezone.now()
     task.save()
 
-
     email_object.send()
-
     
     task.finished_on = timezone.now()
     task.result = "OK"

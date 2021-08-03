@@ -7,6 +7,8 @@
     
     ",
     "mail_from": "TEST TEST <noreply@hcg.gr>",
-    "mail_to": "Serafeim <zzz@zzz.gr>, Serafeim GMAIL <zzz@example.com>",
+    "mail_to": "Serafeim <zzz@zzz.gr>, Serafeim GMAIL <zzz@example.comkoko.gr>",
+    "cc": "koko@kokoko.gr",
+    "reply_to": "zzz@zzz.gr",
     "body_type": "html"
 }

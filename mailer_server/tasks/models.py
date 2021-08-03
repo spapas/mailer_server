@@ -9,7 +9,7 @@ class Task(models.Model):
     finished_on = models.DateTimeField(blank=True, null=True)
     started_by = models.ForeignKey(settings.AUTH_USER_MODEL, editable=False, related_name='task_created_by', on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    job_id = models.CharField(max_length=128, blank=True, null=True)
+    job_id = models.CharField(max_length=128, blank=True, null=True, db_index=True)
     result = models.CharField(max_length=128, blank=True, null=True)
 
     def __unicode__(self):

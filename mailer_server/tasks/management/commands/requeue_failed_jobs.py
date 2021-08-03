@@ -1,5 +1,4 @@
 from django.core.management.base import BaseCommand, CommandError
-from rq.registry import FailedJobRegistry
 from django_rq import get_queue
 import datetime
 
@@ -18,7 +17,7 @@ class Command(BaseCommand):
         ))
 
         queue = get_queue('default')
-        fq = FailedJobRegistry(queue)
+        fq = queue.failed_job_registry
 
         tot = 0
         for ji in fq.job_ids:

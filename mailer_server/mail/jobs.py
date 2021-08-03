@@ -33,11 +33,15 @@ def send_email_async(
 
     job = get_current_job()
     job_id = job.get_id()
-    logger.info("TYPE IS " + email_object.content_subtype )
-    email_object.send()
-
     task = Task.objects.get(id=task_id)
     task.job_id = job_id
+    task.result = "STARTED"
+    task.save()
+
+
+    email_object.send()
+
+    
     task.finished_on = timezone.now()
     task.result = "OK"
     task.save()

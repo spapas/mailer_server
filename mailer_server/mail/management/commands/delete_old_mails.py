@@ -13,5 +13,5 @@ class Command(BaseCommand):
         date = datetime.date.today() - datetime.timedelta(days=options['days'])
         mails = Mail.objects.filter(created_on__lte=date)
         
-        print "Will delete mails older than", date, "i.e", len(mails), "mails."
+        print("Will delete mails older than", date, "i.e", len(mails), "mails.")
         mails.delete()

@@ -4,8 +4,8 @@ from mailer_server.mail.models import Mail, MassMail
 
 
 def email_valid(s):
-    r = parseaddr(s)
-    if r[1] == '' or not '@' in r[1]:
+    _, email = parseaddr(s)
+    if email == '' or not '@' in email:
         return False
     return True
 

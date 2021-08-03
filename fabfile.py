@@ -7,7 +7,7 @@ from mailer_server.settings.local import SUPERVISORD_PASSWORD
 def check_migrations():
     "Do migrations check"
     print("Checking migrations")
-    local('python manage.py makemigrations --dry-run --check')
+    #local('python manage.py makemigrations --dry-run --check')
 
 def pep8():
     "Do pep8 styule checks"

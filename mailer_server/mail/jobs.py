@@ -33,7 +33,7 @@ def send_email_async(
 
     job = get_current_job()
     job_id = job.get_id()
-
+    logger.info("TYPE IS " + email_object.content_subtype )
     email_object.send()
 
     task = Task.objects.get(id=task_id)

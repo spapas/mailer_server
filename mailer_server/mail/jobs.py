@@ -88,8 +88,9 @@ def send_test_mail(user):
 
 def prepare_mail(mail, attachments):
     email_object = mail.get_email_object()
-    for a in attachments:
-        email_object.attach(a.name, a.read(), a.content_type)
+    if attachments:
+        for a in attachments:
+            email_object.attach(a.name, a.read(), a.content_type)
     
     return email_object
 

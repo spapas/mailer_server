@@ -120,13 +120,19 @@ def send_mail(mail, attachments=None):
 
 @job
 def send_mass_mail_async(mm_serializer, user):
+    job = get_current_job()
+    job_id = job.get_id()
+    
     task = Task.objects.create(
         name="send_mass_mail",
         started_by=user,
-        result="NOT STARTED",
+        result="STARTED",
+        started_on=timezone.now(),
+        job_id = job_id
     )
 
     logger.info("Sending mass mails!")
+
     mass_mail = mm_serializer.save(created_by=user)
     mail_list = mass_mail.get_mails()
     email_list = mass_mail.get_emails()
@@ -135,9 +141,6 @@ def send_mass_mail_async(mm_serializer, user):
     connection = get_connection()
     connection.send_messages(email_list)
     
-    job = get_current_job()
-    job_id = job.get_id()
-    task.job_id = job_id
     task.finished_on = timezone.now()
     task.result = "OK"
     task.save()

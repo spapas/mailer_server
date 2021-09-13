@@ -37,7 +37,7 @@ class MailSerializer(serializers.ModelSerializer):
             if fval:
                 fval_parts = fval.split(',')
                 for fvp in fval_parts:
-                    print("FVP ", fvp, parseaddr(fvp))
+                    print("Field original val and parsed ", fvp, parseaddr(fvp))
                     if not email_valid(fvp):
                         raise serializers.ValidationError("Cannot parse address {0}".format(fvp))
         return data

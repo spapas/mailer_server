@@ -40,8 +40,10 @@ class Mail(models.Model):
     
     attachments = models.TextField(blank=True, null=True, )
 
-    def __unicode__(self):
-        return u'{0} {1} {2} {3}'.format(self.created_on, self.created_by, self.id, self.subject)
+    def __str__(self):
+        return u'{0} {1} {2}'.format(self.id, self.created_on, self.mail_to)
+    
+
 
     def get_tuple(self):
         return (

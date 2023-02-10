@@ -7,6 +7,9 @@
     .not-active {
         text-decoration: line-through;
     }
+    .tooltip-inner {
+        max-width: 600px;
+    }
 </style>
 {% endblock %}
 
@@ -37,4 +40,13 @@
     </div>
 </div>
 
+{% endblock %}
+{% block extra_script %}
+<script>
+
+$(function () {
+    console.log('ready')
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
 {% endblock %}

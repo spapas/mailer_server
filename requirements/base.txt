@@ -1,7 +1,7 @@
 arrow==0.10.0
 click==6.7
 contextlib2==0.5.5
-Django==3.2.17
+Django==3.2.18
 Werkzeug==2.0.1
 django-appconf==1.0.4
 django-auth-ldap==3.0.0

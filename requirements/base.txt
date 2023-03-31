@@ -22,7 +22,7 @@ djangorestframework==3.12.4
 python-dateutil==2.8.2
 python-ldap==3.4.0
 python-magic==0.4.24
-redis==4.5.3
+redis==4.5.4
 rq==1.9.0
 six==1.16.0
 unicodecsv==0.14.1

@@ -1,5 +1,5 @@
 -r base.txt
 
 django-debug-toolbar==1.11.1
-sqlparse==0.2.4
+sqlparse==0.4.4
 psycopg2==2.7.4

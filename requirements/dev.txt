@@ -1,6 +1,7 @@
 -r base.txt
 
+
 django-debug-toolbar==4.1.0
-sqlparse==0.2.4
+sqlparse==0.4.4
 black==23.7.0
 pylint==2.6.0

@@ -15,7 +15,7 @@ django-filter==23.2
 django-generic-scaffold==0.5.7
 django-redis==5.0.0
 django-reversion==5.0.4
-django-rq==2.8.1
+django-rq==2.4.1
 django-tables2==2.6.0
 django-widget-tweaks==1.4.12
 djangorestframework==3.14.0
@@ -23,6 +23,6 @@ python-dateutil==2.8.2
 python-ldap==3.4.0
 python-magic==0.4.24
 redis==3.5.3
-rq==1.15.1
+rq==1.9.0
 six==1.16.0
 unicodecsv==0.14.1

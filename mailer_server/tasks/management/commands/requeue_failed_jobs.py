@@ -20,7 +20,7 @@ class Command(BaseCommand):
         fq = queue.failed_job_registry
 
         tot = 0
-        for ji in fq.job_ids:
+        for ji in fq:
             tot += 1
             if not dry:
                 print("Requeing {0}".format(ji))

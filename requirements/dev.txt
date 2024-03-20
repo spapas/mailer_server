@@ -3,6 +3,6 @@
 
 django-debug-toolbar==4.2.0
 sqlparse==0.4.4
-black==23.7.0
+black==24.3.0
 pylint==2.6.0
 fab-classic==1.19.2

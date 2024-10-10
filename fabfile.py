@@ -53,9 +53,9 @@ def touch_gunicorn():
     print("Restarting gunicorn")
 
     # run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD+'  status mlrsrvgunicorn ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
-    sudo("systemctl restart mlrsrv")
+    run("sudo systemctl restart mlrsrv")
     print("Restarting rqworker")
-    sudo("systemctl restart mlrsrv-rqworker")
+    run("sudo systemctl restart mlrsrv-rqworker")
     # run('supervisorctl -s http://127.0.0.1:9001 -u serafeim -p '+SUPERVISORD_PASSWORD +' status mlrsrvrqworker ' + r'| sed "s/.*[pid ]\([0-9]\+\)\,.*/\1/" | xargs kill -HUP')
 
 

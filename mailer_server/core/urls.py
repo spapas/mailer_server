@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import url, include 
+from django.urls import re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import login, logout
@@ -9,13 +9,10 @@ from django.contrib.auth.decorators import permission_required
 from mailer_server.core.views import CreateTokenFormView
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
-    url(r'^help/$', TemplateView.as_view(template_name='help.html'), name='help'),
-    
-    url(r'create_token$', CreateTokenFormView.as_view(template_name='create_token.html'), name='create_token'),
-    
-    url(r'login/$', auth_views.LoginView.as_view(), name='auth_login'),
-    url(r'logout/$', auth_views.LogoutView.as_view(template_name='logout.html'), name='auth_logout'),
-
-    url(r'error/$', permission_required('core.admin')(lambda r: a+1), name='error')
+    re_path(r'^$', TemplateView.as_view(template_name='home.html'), name='home'),
+    re_path(r'^help/$', TemplateView.as_view(template_name='help.html'), name='help'),
+    re_path(r'create_token$', CreateTokenFormView.as_view(template_name='create_token.html'), name='create_token'),
+    re_path(r'login/$', auth_views.LoginView.as_view(), name='auth_login'),
+    re_path(r'logout/$', auth_views.LogoutView.as_view(template_name='logout.html'), name='auth_logout'),
+    re_path(r'error/$', permission_required('core.admin')(lambda r: a+1), name='error')
 ]

@@ -2,15 +2,15 @@
 mailer_server URL Configuration
 """
 from django.conf import settings
-from django.conf.urls import url, include 
+from django.urls import re_path, include 
 from django.conf.urls.static import static
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('mailer_server.core.urls')),
-    url(r'^mail/', include('mailer_server.mail.urls')),
-    url(r'^admin/django-rq/', include('django_rq.urls')),
-    url(r'^admin/', admin.site.urls),
+    re_path(r'^', include('mailer_server.core.urls')),
+    re_path(r'^mail/', include('mailer_server.mail.urls')),
+    re_path(r'^admin/django-rq/', include('django_rq.urls')),
+    re_path(r'^admin/', admin.site.urls),
     
 ]
 
@@ -19,5 +19,5 @@ if settings.DEBUG:
     
     import debug_toolbar
     urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
+        re_path(r'^__debug__/', include(debug_toolbar.urls)),
     ]

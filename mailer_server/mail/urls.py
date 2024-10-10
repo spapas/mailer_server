@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls import url, include 
+from django.urls import re_path
 from django.conf.urls.static import static
 from django.contrib import admin
 
@@ -14,24 +14,19 @@ from mailer_server.mail.views import (
 from mailer_server.mail.scaffolding import DistributionListCrudManager, MailTemplateCrudManager
 
 urlpatterns = [
-    url(r'send_test_email$', send_test_email, name='send_test_email'),
-    url(r'^api/list_mail/$', MailListAPIView.as_view(), name='api_list_mail', ),   
-    url(r'^api/send_mail/$', SendMailAPIView.as_view(), name='api_send_mail', ),   
-    url(r'^api/send_mass_mail/$', SendMassMailAPIView.as_view(), name='api_send_mass_mail', ),   
-
-    url(r'send_mail$', SendMailCreateView.as_view(), name='send_mail'),
-    
-    url(r'send_mass_mail$', SendMassMailFormView.as_view(), name='send_mass_mail'),
-    url(r'send_mass_mail_confirm$', SendMassMailConfirmFormView.as_view(), name='send_mass_mail_confirm'),
-    
-    url(r'^dlupload/(?P<pk>\d+)/$', UploadDistributionListView.as_view(), name='dl_upload'),
-    url(r'^dldownload/(?P<pk>\d+)/$', DownloadDistributionListView.as_view(), name='dl_download'),
-    
-    url(r'^mail_list/$', MailListView.as_view(), name='mail_list'),
-    url(r'^mass_mail_list/$', MassMailListView.as_view(), name='mass_mail_list'),
-    
-    url(r'^distributionlist-autocomplete/$', DistributionListAutocomplete.as_view(), name='distributionlist-autocomplete', ),
-    url(r'^mailtemplate-autocomplete/$', MailTemplateAutocomplete.as_view(), name='mailtemplate-autocomplete', ),
+    re_path(r'send_test_email$', send_test_email, name='send_test_email'),
+    re_path(r'^api/list_mail/$', MailListAPIView.as_view(), name='api_list_mail', ),   
+    re_path(r'^api/send_mail/$', SendMailAPIView.as_view(), name='api_send_mail', ),   
+    re_path(r'^api/send_mass_mail/$', SendMassMailAPIView.as_view(), name='api_send_mass_mail', ),   
+    re_path(r'send_mail$', SendMailCreateView.as_view(), name='send_mail'),
+    re_path(r'send_mass_mail$', SendMassMailFormView.as_view(), name='send_mass_mail'),
+    re_path(r'send_mass_mail_confirm$', SendMassMailConfirmFormView.as_view(), name='send_mass_mail_confirm'),
+    re_path(r'^dlupload/(?P<pk>\d+)/$', UploadDistributionListView.as_view(), name='dl_upload'),
+    re_path(r'^dldownload/(?P<pk>\d+)/$', DownloadDistributionListView.as_view(), name='dl_download'),
+    re_path(r'^mail_list/$', MailListView.as_view(), name='mail_list'),
+    re_path(r'^mass_mail_list/$', MassMailListView.as_view(), name='mass_mail_list'),
+    re_path(r'^distributionlist-autocomplete/$', DistributionListAutocomplete.as_view(), name='distributionlist-autocomplete', ),
+    re_path(r'^mailtemplate-autocomplete/$', MailTemplateAutocomplete.as_view(), name='mailtemplate-autocomplete', ),
     
     
 ]

@@ -15,15 +15,15 @@ django-filter==24.3
 django-generic-scaffold==0.6.0
 django-redis==5.4.0
 django-reversion==5.1.0
-# django-rq==2.10.2
--e git+https://github.com/spapas/django-rq#egg=django_rq
+django-rq==3.0.1
+# -e git+https://github.com/spapas/django-rq#egg=django_rq
 django-tables2==2.7.0
 django-widget-tweaks==1.5.0
 djangorestframework==3.15.2
 python-dateutil==2.9.0.post0
-python-ldap==3.4.0
+python-ldap==3.4.4
 python-magic==0.4.27
-redis==5.1.1
-rq==1.16.2
+redis==6.2.0
+rq==2.3.3
 six==1.16.0
 unicodecsv==0.14.1

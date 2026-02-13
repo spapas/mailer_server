@@ -27,4 +27,4 @@ redis==6.2.0
 rq==2.3.3
 six==1.16.0
 unicodecsv==0.14.1
-sqlparse==0.5.3
+sqlparse==0.5.4
